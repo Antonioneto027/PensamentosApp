@@ -19,6 +19,18 @@ class SiteController
         echo $this->twig->render('index.html.twig');
 
     }
+    
+      public function my_thoughts(): void
+    {
+        echo $this->twig->render('input.html.twig');
+
+    }
+
+       public function list_thoughts(): void
+    {
+        echo $this->twig->render('list.html.twig');
+
+    }
 
 
 }

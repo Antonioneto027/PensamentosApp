@@ -9,7 +9,12 @@ use Pecee\SimpleRouter\SimpleRouter;
 
  
 SimpleRouter::get('/thoughts/', callback: [SiteController::class, 'index']);
+ 
 
+SimpleRouter::group(['prefix' => '/thoughts'], function () {
+    SimpleRouter::get('/my_thoughts',  [SiteController::class,'my_thoughts']);
+    SimpleRouter::get('/list', [SiteController::class,'list_thoughts']);
+     });
 
 
 

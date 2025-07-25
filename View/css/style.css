@@ -4,16 +4,22 @@
   box-sizing: border-box;
 }
 
-body {
+.login {
   margin-top: 4em; 
   padding: 5em; color: #f1f1f1; 
   font-family: 'Anonymous Pro',  
 }
 
+.container {
+  display: flex;
+   justify-content: center;
+  
+}
+
 
  .centralize {
     
-      min-height: 100vh;
+         
         display: flex;
         align-items: center;
         justify-content: center;
@@ -26,7 +32,13 @@ body {
   width: 50%;
   }
  
-
+nav {
+  align-items: center;
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.145);
+ 
+  width: 100%;
+}
 /* Animations */
 
 @import url(https://fonts.googleapis.com/css?family=Anonymous+Pro);

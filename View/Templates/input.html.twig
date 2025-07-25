@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="color-scheme" content="light">
+        <link href="../View/css/style.css" rel="stylesheet" type="text/css">
+        <link href="../View/css/pico.min.css" rel="stylesheet" type="text/css">
+        <title>Thoughts - Your Thoughts</title>
+        <link rel="icon" type="image/x-icon" href="../View/assets/img/favicon.ico">
+    </head>
+
+    <body>
+        <nav>
+            <ul>
+                <li>
+                    <strong>Thoughts</strong>
+                </li>
+                <li>
+                   <a href=/thoughts/> Home </a>
+                </li> 
+            </ul>
+        </nav>
+
+        <main>
+            <section class="container">
+                <form action="submit.php" method="post">
+                    <label for="cause">
+                        <strong>What've caused your emotion?</strong>
+                    </label>
+                    <input type="text" name="cause" placeholder="Insert the cause" aria-label="Text">
+                    <label for="emotions">
+                        <strong>Which emotions did you have?</strong>
+                    </label>
+                    <input type="text" name="emotions" placeholder="Insert the emotion" aria-label="Text">
+                    <label for="intensity">
+                        <strong>What's the intensity of your emotion?</strong>
+                    </label>
+                    <select name="intensity" id="intensity" aria-label="Intensity" required>
+                        <option value="" disabled selected>Select the intensity</option>
+                    </select>
+                    <label for="thought">
+                        <strong>Which thoughts did you have?</strong>
+                    </label>
+                    <fieldset id="form-container">
+                        <label>
+                            <input type="text" name="thought[]" placeholder="Insert a thought">
+                        </label>
+                    </fieldset>
+
+                    <button type="button" onclick="GFG_Fun()">+</button>
+                    
+                    <div class="button-wdt">
+                        <input type="submit" value="Save">
+                    </div>
+                </form>
+            </section>
+        </body>
+    </body>
+</html></main><script>
+document.addEventListener("DOMContentLoaded", function () {
+    const MAX_FIELDS = 3;
+
+    window.GFG_Fun = function () {
+        const container = document.getElementById("form-container");
+        const currentFields = container.querySelectorAll('input[name="thought[]"]').length;
+
+        if (currentFields >= MAX_FIELDS) {
+            alert("You can only insert up to " + MAX_FIELDS + " thoughts.");
+            return;
+        }
+
+        // Cria o label
+        const label = document.createElement("label");
+
+        // Cria o input
+        const input = document.createElement("input");
+        input.type = "text";
+        input.name = "thought[]";
+        input.placeholder = "Insert a thought";
+
+        // Adiciona input ao label
+        label.appendChild(input);
+
+        // Adiciona label ao container
+        container.appendChild(label);
+    };
+});
+
+const select = document.getElementById('intensity');
+for (let i = 1; i <= 10; i++) {
+    const option = document.createElement('option');
+    option.value = i;
+    option.textContent = i;
+    select.appendChild(option);
+}</script></body></html>
