@@ -8,7 +8,7 @@ use Pecee\SimpleRouter\SimpleRouter;
 
 
  
-SimpleRouter::get('/thoughts/', callback: [SiteController::class, 'testRoute']);
+SimpleRouter::get('/thoughts/', callback: [SiteController::class, 'index']);
 
 
 
