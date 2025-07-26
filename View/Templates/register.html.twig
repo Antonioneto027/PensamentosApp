@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="color-scheme" content="light">
+        <link href="./View/css/style.css" rel="stylesheet" type="text/css">
+        <link href="./View/css/pico.min.css" rel="stylesheet" type="text/css">
+        <title>Thoughts - An Open CBT Tool</title>
+        <link rel="icon" type="image/x-icon" href="View/assets/img/favicon.ico">
+
+    </head>
+
+    <body>
+        <nav>
+            <ul>
+                <li>
+                    <strong>Thoughts</strong>
+                </li>
+            </ul>
+        </nav>
+        <main class="centralize">
+            <form method="POST" action="/thoughts/register" class="centralize"> <!-- IMPORTANTE -->
+            <input type="text" name="name" placeholder="User Name" aria-label="Name" autocomplete="name" required>
+            <input type="email" name="email" placeholder="Your E-mail" aria-label="Email" autocomplete="email" required>
+            <input type="password" name="password_hash" placeholder="Password" aria-label="Password" required>
+            
+            <div class="button-wdt">
+                <input type="submit" value="Register">
+            </div>
+        </form>
+
+
+        </main>
+    </body>
+</html>

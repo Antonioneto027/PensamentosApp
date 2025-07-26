@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Controllers;
+namespace App\Controllers;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
  
@@ -29,6 +29,12 @@ class SiteController
        public function list_thoughts(): void
     {
         echo $this->twig->render('list.html.twig');
+
+    }
+
+    public function register(): void
+    {
+        echo $this->twig->render('register.html.twig');
 
     }
 
