@@ -57,6 +57,29 @@ class UserController
 
         echo "<div style='background-color:$toastClass;color:white;padding:10px;'>$message</div>";
     }
+
+    public function login() {
+            $conn = $this->conn;
+
+                
+            $email = $_POST['email'];
+            $password = $_POST['password_hash'];
+
+            $stmt = $conn->prepare("SELECT id, password_hash FROM users WHERE email = ?");
+            $stmt->execute([$email]);
+            $fetch = $stmt->fetch();
+
+            if ($fetch && password_verify($password, $fetch['password_hash'])) {
+                header("location: /thoughts/list");
+                exit;
+            } else {
+                echo "Login inválido";
+            }
+    }
+
+
+
+
 }
 
 

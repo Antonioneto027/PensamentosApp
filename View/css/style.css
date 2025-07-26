@@ -12,7 +12,9 @@
 
 .container {
   display: flex;
-   justify-content: center;
+  justify-content: center;
+  flex-direction: column;
+ 
   
 }
 
@@ -58,12 +60,12 @@ nav {
 /* Animation */
 .typewriter-animation {
   animation: 
-    typewriter 3s steps(50) 1s 1 normal both, 
-    blinkingCursor 500ms steps(50) infinite normal;
+    typewriter 1s steps(50) 1s 1 normal both, 
+    blinkingCursor 700ms steps(50) infinite normal;
 }
 @keyframes typewriter {
   from { width: 0; }
-  to { width: 100%; }
+  to { width: 7.5ch; }
 }
 @keyframes blinkingCursor{
   from { border-right-color: rgba(5, 0, 0, 0.75); }

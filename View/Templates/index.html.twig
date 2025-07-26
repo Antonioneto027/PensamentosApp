@@ -28,14 +28,17 @@
                     </p>
                 </div>
                 <div>
-                    <input type="email" name="email" placeholder="Your E-mail" arial-label="email" autocomplete="email">
-                    <input type="password" name="password" placeholder="Password" aria-label="Password">
-                </div>
-                <div class="button-wdt">
-                    <input type="submit" value="Login">
-                </div>
-                <div class="button-wdt"></div>
-                <a href="/thoughts/register">Don't have an account? Sign Up!</a>
+                    <form method="POST" action="/thoughts/list">
+                        <input type="email" name="email" placeholder="Your E-mail" arial-label="email" autocomplete="email">
+                        <input type="password" name="password_hash" placeholder="Password" aria-label="Password">
+
+                    </div>
+                    <div class="button-wdt">
+                        <input type="submit" value="Login">
+                    </div>
+                    <div class="button-wdt"></div>
+                    <a href="/thoughts/register">Don't have an account? Sign Up!</a>
+                </form>
             </section>
 
         </main>

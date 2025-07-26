@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="color-scheme" content="light">
+        <meta name="color-scheme" content="light dark">
         <link href="./View/css/style.css" rel="stylesheet" type="text/css">
         <link href="./View/css/pico.min.css" rel="stylesheet" type="text/css">
         <title>Thoughts - Your Thoughts</title>
@@ -17,49 +17,55 @@
                 <li>
                     <strong>Thoughts</strong>
                 </li>
-                <li>
-                   <a href=/thoughts/> Home </a>
-                </li> 
-            </ul>
-        </nav>
-
-        <main>
-            <section class="container">
-                <form action="submit.php" method="post">
-                    <label for="cause">
-                        <strong>What've caused your emotion?</strong>
-                    </label>
-                    <input type="text" name="cause" placeholder="Insert the cause" aria-label="Text">
-                    <label for="emotions">
-                        <strong>Which emotions did you have?</strong>
-                    </label>
-                    <input type="text" name="emotions" placeholder="Insert the emotion" aria-label="Text">
-                    <label for="intensity">
-                        <strong>What's the intensity of your emotion?</strong>
-                    </label>
-                    <select name="intensity" id="intensity" aria-label="Intensity" required>
-                        <option value="" disabled selected>Select the intensity</option>
-                    </select>
-                    <label for="thought">
-                        <strong>Which thoughts did you have?</strong>
-                    </label>
-                    <fieldset id="form-container">
-                        <label>
-                            <input type="text" name="thought[]" placeholder="Insert a thought">
-                        </label>
-                    </fieldset>
-
-                    <button type="button" onclick="GFG_Fun()">+</button>
-                    
-                    <div class="button-wdt">
-                        <input type="submit" value="Save">
-                    </div>
-                </form>
-            </section>
-        </body>
+                 
+            </a>
+        </li>
     </body>
-</html></main><script>
-document.addEventListener("DOMContentLoaded", function () {
+</html></ul></nav><main><section class="container">
+
+<form action="submit.php" method="post">
+    <label for="cause">
+        <strong>What've caused your emotion?</strong>
+    </label>
+    <input type="text" name="cause" placeholder="Insert the cause" aria-label="Text">
+    <label for="emotions">
+        <strong>Which emotions did you have?</strong>
+    </label>
+    <input type="text" name="emotions" placeholder="Insert the emotion" aria-label="Text">
+    <label for="intensity">
+        <strong>What's the intensity of your emotion?</strong>
+    </label>
+    <select name="intensity" id="intensity" aria-label="Intensity">
+        <option value="" disabled selected>Select the intensity</option>
+    </select>
+    <label for="thought">
+        <strong>Which thoughts did you have?</strong>
+    </label>
+    <fieldset id="form-container">
+        <label>
+            <input type="text" name="thought[]" placeholder="Insert a thought">
+        </label>
+    </fieldset>
+
+    <button type="button" onclick="GFG_Fun()">+</button>
+
+    <div class="button-wdt">
+        <input type="submit" value="Save">
+    </div>
+  
+        
+
+</form>
+<div>
+ <a href="/thoughts/list">
+                    <button style="background-color: #fe5b30 !important">Cancel</button>
+                </a>
+
+</div>
+
+ 
+
+</section></body></body></html></main><script>document.addEventListener("DOMContentLoaded", function () {
     const MAX_FIELDS = 3;
 
     window.GFG_Fun = function () {
