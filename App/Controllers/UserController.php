@@ -78,6 +78,20 @@ class UserController
     }
 
 
+    public function userID() {
+        $conn = $this->conn;
+
+        $email = $_POST['email'];
+       
+
+        $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+        $fetch = $stmt-> execute([$email]);
+
+        return $fetch ? $id : 0;
+        
+    }
+
+
 
 
 }
