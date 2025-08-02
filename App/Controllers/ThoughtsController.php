@@ -18,11 +18,11 @@ class ThoughtsController {
 
         try {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            //   $user_id = $_POST["id"]; // Coloque o índice correto aqui
-                $cause = $_POST["cause"]; // Coloque o índice correto aqui
-                $emotion = $_POST["emotion"]; // Coloque o índice correto aqui
-                $intensity = $_POST["intensity"]; // Coloque o índice correto aqui
-                $thoughts = $_POST["thought"]; // Coloque o índice correto aqui
+            //   $user_id = $_POST["id"];  
+                $cause = $_POST["cause"];  
+                $emotion = $_POST["emotion"];  
+                $intensity = $_POST["intensity"];  
+                $thoughts = $_POST["thought"];  
                 $created_at = date("Y-m-d H:i:s");
 
                 $stmt1 = $conn->prepare("INSERT INTO emotions_log (cause, emotion, intensity, created_at) VALUES (?, ?, ?, ?)");
