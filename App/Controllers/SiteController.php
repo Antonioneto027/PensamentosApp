@@ -28,12 +28,15 @@ class SiteController
 
        public function list_thoughts(): void
     {
-        echo $this->twig->render('list.html.twig');
-
+        session_start();
+        $username = $_SESSION['username'];
+        echo $this->twig->render('list.html.twig', ['username' => $username]);
+        session_abort();
     }
 
     public function register(): void
     {
+       
         echo $this->twig->render('register.html.twig');
 
     }

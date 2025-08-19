@@ -3,6 +3,7 @@
 
 namespace App\Controllers;
 use App\Controllers\ConnectDb;
+use PDO;
 
 class UserController
 {
@@ -22,7 +23,7 @@ class UserController
         $toastClass = '';
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            $name = $_POST['name'] ?? '';
+            $name = $_POST['username'] ?? '';
             $email = $_POST['email'] ?? '';
             $password = $_POST['password_hash'] ?? '';
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
@@ -38,7 +39,7 @@ class UserController
                 $button = "<button> Click here to come back to login page </button>";
             } else {
                 // Insere novo usuário
-                $stmt = $conn->prepare("INSERT INTO users (name, email, password_hash, created_at) VALUES (?, ?, ?, ?)");
+                $stmt = $conn->prepare("INSERT INTO users (username, email, password_hash, created_at) VALUES (?, ?, ?, ?)");
 
                 if ($stmt->execute([$name, $email, $password_hash, $created_at])) {
                     $  $message = "Account created successfully";
@@ -70,6 +71,7 @@ class UserController
             $fetch = $stmt->fetch();
 
             if ($fetch && password_verify($password, $fetch['password_hash'])) {
+                $this->getUserName();
                 header("location: /thoughts/list");
                 exit;
             } else {
@@ -78,21 +80,34 @@ class UserController
     }
 
 
-    public function userID() {
+    public function getUserName() {
         $conn = $this->conn;
 
-        $email = $_POST['email'];
-       
+        $email = $_POST["email"];
 
-        $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
-        $fetch = $stmt-> execute([$email]);
-
-        return $fetch ? $id : 0;
+        $stmt = $conn->prepare("SELECT username FROM users WHERE email = ?");
+        $stmt-> execute([$email]);
         
+        $return = $stmt->fetch(mode: PDO::FETCH_ASSOC);
+        
+        if ($return) {
+           session_start();
+           $_SESSION['username'] = $return["username"];
+           $_SESSION["hash"] =  hash('sha256', $return['username']); //Criar um código hash para que o usuário não consiga acessar o sistema via link
+        } else {
+            return "Usuário não encontrado"; //Remover
+        }
+          
     }
 
 
-
+    public function logout() {
+        $this->conn = null;
+        $_SESSION["username"] = null;
+        session_abort();
+        header("location: /thoughts/");
+      
+    }
 
 }
 

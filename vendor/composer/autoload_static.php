@@ -30,6 +30,10 @@ class ComposerStaticInit81a8c97a0e5abf0abb462913f4bef7b5
         array (
             'Pecee\\' => 6,
         ),
+        'L' => 
+        array (
+            'Labs\\' => 5,
+        ),
         'A' => 
         array (
             'App\\Controllers\\' => 16,
@@ -52,6 +56,10 @@ class ComposerStaticInit81a8c97a0e5abf0abb462913f4bef7b5
         'Pecee\\' => 
         array (
             0 => __DIR__ . '/..' . '/pecee/simple-router/src/Pecee',
+        ),
+        'Labs\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Labs',
         ),
         'App\\Controllers\\' => 
         array (
