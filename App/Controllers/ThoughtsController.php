@@ -22,7 +22,7 @@ class ThoughtsController {
                 $cause = $_POST["cause"];  
                 $emotion = $_POST["emotion"];  
                 $intensity = $_POST["intensity"];  
-                $thoughts = $_POST["thought"];  
+                $thoughts = $_POST["thoughts"];  
                 $created_at = date("Y-m-d H:i:s");
 
                 $stmt1 = $conn->prepare("INSERT INTO emotions_log (cause, emotion, intensity, created_at) VALUES (?, ?, ?, ?)");
@@ -32,7 +32,7 @@ class ThoughtsController {
                 $stmt1->bindValue(4, $created_at);
                 $stmt1->execute();
 
-                $stmt2 = $conn->prepare("INSERT INTO thoughts_log (thought, created_at) VALUES (?, ?)");
+                $stmt2 = $conn->prepare("INSERT INTO thoughts_log (thoughts, created_at) VALUES (?, ?)");
                 $stmt2->bindValue(1, $thoughts);
                 $stmt2->bindValue(2, $created_at);
                 $stmt2->execute();

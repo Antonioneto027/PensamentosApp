@@ -38,12 +38,12 @@
     <select name="intensity" id="intensity" aria-label="Intensity">
         <option value="" disabled selected>Select the intensity</option>
     </select>
-    <label for="thought">
+    <label for="thoughts">
         <strong>Which thoughts did you have?</strong>
     </label>
     <fieldset id="form-container">
         <label>
-            <input type="text" name="thought[]" placeholder="Insert a thought">
+            <input type="text" name="thoughts[]" placeholder="Insert a thought">
         </label>
     </fieldset>
 
@@ -70,7 +70,7 @@
 
     window.GFG_Fun = function () {
         const container = document.getElementById("form-container");
-        const currentFields = container.querySelectorAll('input[name="thought[]"]').length;
+        const currentFields = container.querySelectorAll('input[name="thoughts[]"]').length;
 
         if (currentFields >= MAX_FIELDS) {
             alert("You can only insert up to " + MAX_FIELDS + " thoughts.");
@@ -83,7 +83,7 @@
         // Cria o input
         const input = document.createElement("input");
         input.type = "text";
-        input.name = "thought[]";
+        input.name = "thoughts[]";
         input.placeholder = "Insert a thought";
 
         // Adiciona input ao label
