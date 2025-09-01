@@ -10,6 +10,7 @@ return array(
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Symfony\\Polyfill\\Ctype\\' => array($vendorDir . '/symfony/polyfill-ctype'),
     'Pecee\\' => array($vendorDir . '/pecee/simple-router/src/Pecee'),
+    'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
     'Labs\\' => array($baseDir . '/Labs'),
     'App\\Controllers\\' => array($baseDir . '/App/Controllers'),
 );

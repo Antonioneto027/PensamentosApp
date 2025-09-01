@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="color-scheme" content="light">
+        <link href="./View/css/style.css" rel="stylesheet" type="text/css">
+        <link href="./View/css/pico.min.css" rel="stylesheet" type="text/css">
+        <title>Thoughts - An Open CBT Tool</title>
+        <link rel="icon" type="image/x-icon" href="View/assets/img/favicon.ico">
+
+    </head>
+
+    <body>
+
+        <main class="centralize">
+
+            <section class="centralize login">
+
+                <div style="text-align: center">
+                    <img src="View/assets/img/logo.png">
+                    <h2 class="cursor typewriter-animation">
+                        Thoughts
+                    </h2>
+                    <p class="A CBT tool" style="font-style: italic">
+                        An Open CBT Tool
+                    </p>
+                </div>
+                <div>
+                    <form method="POST" action="/thoughts/list">
+                        <label> Insert your confirmation code </label> 
+                        <input type="password" name="password_hash" placeholder="Password" aria-label="Password">
+
+                    </div>
+                    <div class="button-wdt">
+                        <input type="submit" value="Submit">
+                    </div>
+                    <div class="button-wdt"></div>
+                    <a href="/thoughts/register">Don't have an account? Sign Up!</a>
+                </form>
+            </section>
+
+        </main>
+    </body>
+</html>
