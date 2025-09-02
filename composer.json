@@ -11,7 +11,8 @@
           
         },
         "classmap": [
-            "Labs/MailConfig.php"
+            "Labs/MailLabs//MailConfig.php",
+            "Labs/HashLabs/test.php"
         ]
     }
 }

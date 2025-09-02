@@ -7,5 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
-    'HelpersTest\\MailConfig' => $baseDir . '/Labs/MailConfig.php',
+    'HelpersTest\\MailConfig' => $baseDir . '/Labs/MailLabs/MailConfig.php',
 );
