@@ -9,6 +9,9 @@
             "App\\Controllers\\": "App/Controllers/",
             "Labs\\": "Labs"
           
-        }
+        },
+        "classmap": [
+            "Labs/MailConfig.php"
+        ]
     }
 }
