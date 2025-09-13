@@ -41,6 +41,13 @@ nav {
  
   width: 100%;
 }
+
+center {
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
 /* Animations */
 
 @import url(https://fonts.googleapis.com/css?family=Anonymous+Pro);
