@@ -6,13 +6,18 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\Controllers\\": "App/Controllers/",
-            "Labs\\": "Labs"
+            "App\\Controllers\\" : "/App/Controllers/",
+            "Labs\\": "/Labs",
+            "Helpers\\": "/App/Helpers/",
+            "Labs\\HashLabs\\" : "/Labs/HashLabs"
           
         },
         "classmap": [
-            "Labs/MailLabs//MailConfig.php",
-            "Labs/HashLabs/test.php"
+            "App/Controllers/SiteController.php",
+            "App/Controllers/ConnectDb.php",
+            "App/Controllers/UserController.php",
+            "App/Helpers/Helper.php"
+        
         ]
     }
 }

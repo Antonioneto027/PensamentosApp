@@ -29,8 +29,8 @@ class SiteController
        public function list_thoughts(): void
     {
         session_start();
-        $username = $_SESSION['username'];
-        echo $this->twig->render('list.html.twig', ['username' => $username]);
+     //   $username = $_SESSION['username'];
+        echo $this->twig->render('list.html.twig');
         session_abort();
     }
 
@@ -38,6 +38,14 @@ class SiteController
     {
        
         echo $this->twig->render('register.html.twig');
+
+    }
+
+
+        public function confirm(): void
+    {
+       
+        echo $this->twig->render('confirmation_screen.html.twig');
 
     }
 

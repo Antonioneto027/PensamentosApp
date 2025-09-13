@@ -60,18 +60,19 @@ nav {
 /* Animation */
 .typewriter-animation {
   animation: 
-    typewriter 1s steps(50) 1s 1 normal both, 
-    blinkingCursor 700ms steps(70) infinite normal;
+    typewriter 0.75s steps(50) 1s 1 normal both, 
+    blinkingCursor 700ms steps(70) infinite normal
 }
+
 @keyframes typewriter {
   from { width: 0; }
-  to { width: 7.8ch; }
+  to { width: 11.0ch; } 
 }
-@keyframes blinkingCursor{
+
+@keyframes blinkingCursor {
   from { border-right-color: rgba(5, 0, 0, 0.75); }
   to { border-right-color: transparent; }
 }
-
 
 
 
