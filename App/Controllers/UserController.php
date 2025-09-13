@@ -2,6 +2,7 @@
 
 
 namespace App\Controllers;
+use App\Helpers\Helper;
 use App\Controllers\ConnectDb;
 use PDO;
 
@@ -9,10 +10,12 @@ class UserController
 {
 
     private $conn;
+    private $helper;
 
     public function __construct(){
         $db = new ConnectDb();
         $this->conn = $db->getConnection();
+        $this->helper = new Helper();
     }
     
 
@@ -23,26 +26,26 @@ class UserController
         $toastClass = '';
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            $name = $_POST['username'] ?? '';
-            $email = $_POST['email'] ?? '';
+            $email = $_POST["email"] ?? '';
+            $email_hash = $this->helper->hashEmail($email);
             $password = $_POST['password_hash'] ?? '';
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
             $created_at = date("Y-m-d H:i:s"); // cria a data atual
 
             // Verifica se e-mail já existe
-            $checkEmailStmt = $conn->prepare("SELECT email FROM users WHERE email = ?");
-            $checkEmailStmt->execute([$email]);
+            $checkEmailStmt = $conn->prepare("SELECT email_hash FROM users WHERE email_hash = ?");
+            $checkEmailStmt->execute([$email_hash]);
 
             if ($checkEmailStmt->fetch()) {
-                $message = "Email ID already exists";
+                $message = "Este e-mail já está sendo utilizado em uma conta";
                 $toastClass = "#007bff"; // Azul
-                $button = "<button> Click here to come back to login page </button>";
+                $button = "<button> Clique aqui para voltar para a página de login </button>";
             } else {
                 // Insere novo usuário
-                $stmt = $conn->prepare("INSERT INTO users (username, email, password_hash, created_at) VALUES (?, ?, ?, ?)");
+                $stmt = $conn->prepare("INSERT INTO users (email_hash, password_hash, created_at) VALUES (?, ?, ?)");
 
-                if ($stmt->execute([$name, $email, $password_hash, $created_at])) {
-                    $  $message = "Account created successfully";
+                if ($stmt->execute([$email_hash, $password_hash, $created_at])) {
+                    $message = "Account created successfully";
                     $toastClass = "#28a745"; // Verde
                     $button = '<a href="/thoughts/"><button>Click here to log in</button></a>';
                     echo "<div style='background-color:$toastClass;color:white;padding:10px;margin:10px 0;'>
@@ -64,14 +67,14 @@ class UserController
 
                 
             $email = $_POST['email'];
+            $email_hash = $this->helper->hashEmail($email);
             $password = $_POST['password_hash'];
 
-            $stmt = $conn->prepare("SELECT id, password_hash FROM users WHERE email = ?");
-            $stmt->execute([$email]);
+            $stmt = $conn->prepare("SELECT email_hash, password_hash FROM users WHERE email_hash = ?");
+            $stmt->execute([$email_hash]);
             $fetch = $stmt->fetch();
 
             if ($fetch && password_verify($password, $fetch['password_hash'])) {
-                $this->getUserName();
                 header("location: /thoughts/list");
                 exit;
             } else {
@@ -80,7 +83,7 @@ class UserController
     }
 
 
-    public function getUserName() {
+  /*  public function getUserName() {
         $conn = $this->conn;
 
         $email = $_POST["email"];
@@ -99,18 +102,17 @@ class UserController
         }
           
     }
-
+*/
 
     public function logout() {
         $this->conn = null;
-        $_SESSION["username"] = null;
+      //  $_SESSION["username"] = null;
         session_abort();
         header("location: /thoughts/");
       
     }
 
 }
-
 
 
 

@@ -33,7 +33,12 @@ class ComposerStaticInit81a8c97a0e5abf0abb462913f4bef7b5
         ),
         'L' => 
         array (
+            'Labs\\HashLabs\\' => 14,
             'Labs\\' => 5,
+        ),
+        'H' => 
+        array (
+            'Helpers\\' => 8,
         ),
         'A' => 
         array (
@@ -62,19 +67,30 @@ class ComposerStaticInit81a8c97a0e5abf0abb462913f4bef7b5
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
+        'Labs\\HashLabs\\' => 
+        array (
+            0 => '/Labs/HashLabs',
+        ),
         'Labs\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/Labs',
+            0 => '/Labs',
+        ),
+        'Helpers\\' => 
+        array (
+            0 => '/App/Helpers',
         ),
         'App\\Controllers\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/App/Controllers',
+            0 => '/App/Controllers',
         ),
     );
 
     public static $classMap = array (
+        'App\\Controllers\\ConnectDb' => __DIR__ . '/../..' . '/App/Controllers/ConnectDb.php',
+        'App\\Controllers\\SiteController' => __DIR__ . '/../..' . '/App/Controllers/SiteController.php',
+        'App\\Controllers\\UserController' => __DIR__ . '/../..' . '/App/Controllers/UserController.php',
+        'App\\Helpers\\Helper' => __DIR__ . '/../..' . '/App/Helpers/Helper.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'HelpersTest\\MailConfig' => __DIR__ . '/../..' . '/Labs/MailConfig.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

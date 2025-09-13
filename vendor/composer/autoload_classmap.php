@@ -6,6 +6,9 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Controllers\\ConnectDb' => $baseDir . '/App/Controllers/ConnectDb.php',
+    'App\\Controllers\\SiteController' => $baseDir . '/App/Controllers/SiteController.php',
+    'App\\Controllers\\UserController' => $baseDir . '/App/Controllers/UserController.php',
+    'App\\Helpers\\Helper' => $baseDir . '/App/Helpers/Helper.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
-    'HelpersTest\\MailConfig' => $baseDir . '/Labs/MailConfig.php',
 );
