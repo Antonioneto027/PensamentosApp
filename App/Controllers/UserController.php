@@ -2,15 +2,25 @@
 
 
 namespace App\Controllers;
+
 use App\Helpers\Helper;
 use App\Controllers\ConnectDb;
 use PDO;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require '/opt/lampp/htdocs/thoughts/vendor/autoload.php';
 
 class UserController
 {
 
     private $conn;
     private $helper;
+
+    private $confirmationCode;
+
+    private $email;
 
     public function __construct(){
         $db = new ConnectDb();
@@ -27,6 +37,7 @@ class UserController
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $email = $_POST["email"] ?? '';
+            $this->email = $email;
             $email_hash = $this->helper->hashEmail($email);
             $password = $_POST['password_hash'] ?? '';
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
@@ -42,24 +53,91 @@ class UserController
                 $button = "<button> Clique aqui para voltar para a página de login </button>";
             } else {
                 // Insere novo usuário
-                $stmt = $conn->prepare("INSERT INTO users (email_hash, password_hash, created_at) VALUES (?, ?, ?)");
+         
+
+               $randomHash = $this->helper->confCode();
+               $this->confirmationCode = $randomHash;
+               $mail = new PHPMailer(true);
+               $mail->isSMTP();     
+
+
+                 try {
+                    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+                    $mail->Host = 'live.smtp.mailtrap.io';
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'smtp@mailtrap.io';
+                    $mail->Password = 'f3e9f0655c410da4905e28bb6befeae4';
+                  
+                    $mail->Port = 2525;
+                    $mail->CharSet = 'UTF-8';
+
+                    $to = $this->email; 
+                    $subject = "Pensamentos App - Código de Confirmação";
+                    $body = "Seu código de confirmação é: {$randomHash}";
+
+                    // Recipients
+                    $mail->setFrom('no-reply@pensamentos.app.br', 'Pensamentos App');
+                    $mail->addAddress($to);
+
+                    // Content
+                    $mail->isHTML(true);
+                    $mail->Subject = $subject;
+                    $mail->Body    = $body;
+                    $mail->AltBody = strip_tags($body);
+
+                    $mail->send();  
+
+                    header("Location:/thoughts/confirm"); 
+                    
+                // echo 'Message has been sent';
+                 } catch (Exception $e) {
+                     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+
+                 }
+                
+
+                $verification = $this->verifyConfirmationCode();  
+
+                if ($verification) {
+                
+                 $stmt = $conn->prepare("INSERT INTO users (email_hash, password_hash, created_at) VALUES (?, ?, ?)");
 
                 if ($stmt->execute([$email_hash, $password_hash, $created_at])) {
-                    $message = "Account created successfully";
-                    $toastClass = "#28a745"; // Verde
-                    $button = '<a href="/thoughts/"><button>Click here to log in</button></a>';
-                    echo "<div style='background-color:$toastClass;color:white;padding:10px;margin:10px 0;'>
-                            $message<br>$button
-                        </div>";
-    return;
+                        $message = "Account created successfully";
+                        $toastClass = "#28a745"; // Verde
+                        $button = '<a href="/thoughts/"><button>Click here to log in</button></a>';
+                        echo "<div style='background-color:$toastClass;color:white;padding:10px;margin:10px 0;'>
+                                $message<br>$button
+                            </div>";
+                        return;  
+                    } else {
+                        $message = "Error: Não foi possível registrar";
+                        $toastClass = "#dc3545"; // Vermelho
+                    } 
+
                 } else {
-                    $message = "Error: Não foi possível registrar";
-                    $toastClass = "#dc3545"; // Vermelho
+                     echo "<div style='background-color:$toastClass;color:white;padding:10px;margin:10px 0;'>
+                            Código Incorreto, tente nvoamente! <br>
+                        </div>";
                 }
+        
             }
         }
 
         echo "<div style='background-color:$toastClass;color:white;padding:10px;'>$message</div>";
+    }
+
+    public function verifyConfirmationCode() {
+
+       $confirmationCode = $this->confirmationCode; //Código enviado por e-mail
+       $code = $_POST['code'] ?? ''; //Código inserido no formulário
+        
+       if ($confirmationCode === $code) {
+        return true;
+       } else {
+        return false;
+       }
+        
     }
 
     public function login() {

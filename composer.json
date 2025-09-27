@@ -8,8 +8,8 @@
         "psr-4": {
             "App\\Controllers\\" : "/App/Controllers/",
             "Labs\\": "/Labs",
-            "Helpers\\": "/App/Helpers/",
-            "Labs\\HashLabs\\" : "/Labs/HashLabs"
+            "Helpers\\": "/App/Helpers/"
+            
           
         },
         "classmap": [
@@ -17,6 +17,7 @@
             "App/Controllers/ConnectDb.php",
             "App/Controllers/UserController.php",
             "App/Helpers/Helper.php"
+ 
         
         ]
     }

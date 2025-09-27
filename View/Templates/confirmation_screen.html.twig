@@ -5,10 +5,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="color-scheme" content="light">
-        <link href="../css/style.css" rel="stylesheet" type="text/css">
-        <link href="../css/pico.min.css" rel="stylesheet" type="text/css">
+        <link href="./View/css/style.css" rel="stylesheet" type="text/css">
+        <link href="./View/css/pico.min.css" rel="stylesheet" type="text/css">
         <title>Pensamentos - Uma ferramenta livre para TCC</title>
-        <link rel="icon" type="image/x-icon" href="View/assets/img/favicon.ico">
+        <link rel="icon" type="image/x-icon" href="./View/assets/img/favicon.ico">
 
     </head>
 
@@ -19,21 +19,21 @@
             <section class="centralize login">
 
                 <div style="text-align: center">
-                    <img src="../assets/img/logo.png" width="120x120">
+                    <img src="./View/assets/img/logo.png" width="120x120">
                     <br>
                     <h2 class="cursor typewriter-animation">
                         Quase lá!
                     </h2>
                 </div>
                 <div>
-                    <form method="POST" action="/thoughts/confirm">
+                    <form method="POST" action="/thoughts/confirm" class="centralize">
                         <label> Insira o Código de Confirmação que enviamos para o seu e-mail!</label>
                         <input type="code" name="code" placeholder="Seu código aqui" arial-label="code" autocomplete="code">
-                     
-                </div>
-                <div class="button-wdt">
-                        <input type="submit" value="Verificar">
-                </div>
+                            <div class="button-wdt">
+                                <input type="submit" value="Verificar">
+                            </div>
+                    </div>
+                 
             
                 </form>
             </section>

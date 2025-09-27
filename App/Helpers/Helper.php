@@ -22,8 +22,15 @@ class Helper {
     // Hash using SHA-256 (more secure than SHA-1)
          return hash('sha256', $normalizedEmail);
 
+    }
 
+    public function confCode() {
 
+        $random_hash = substr(md5(uniqid(rand(), true)), 6, 6); 
+
+        return $random_hash;
+
+    }
 
     }
 
@@ -35,9 +42,6 @@ class Helper {
 
 
 
-
-
-}
 
 
 

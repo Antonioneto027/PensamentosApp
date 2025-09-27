@@ -33,7 +33,6 @@ class ComposerStaticInit81a8c97a0e5abf0abb462913f4bef7b5
         ),
         'L' => 
         array (
-            'Labs\\HashLabs\\' => 14,
             'Labs\\' => 5,
         ),
         'H' => 
@@ -66,10 +65,6 @@ class ComposerStaticInit81a8c97a0e5abf0abb462913f4bef7b5
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
-        ),
-        'Labs\\HashLabs\\' => 
-        array (
-            0 => '/Labs/HashLabs',
         ),
         'Labs\\' => 
         array (
