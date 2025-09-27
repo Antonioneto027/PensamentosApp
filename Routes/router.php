@@ -5,9 +5,9 @@ namespace Routes;
 use App\Controllers\SiteController;
 use App\Controllers\UserController;
 use App\Controllers\ThoughtsController;
-use Labs\HashLabs\UserControllerTest;
-use Labs\Test;
-use Labs\Test2;
+//use Labs\HashLabs\UserControllerTest;
+//use Labs\Test;
+//use Labs\Test2;
 use Pecee\SimpleRouter\SimpleRouter;
  
 
@@ -26,11 +26,12 @@ SimpleRouter::group(['prefix' => '/thoughts'], function () {
     SimpleRouter::post('/save_thoughts', [ThoughtsController::class, 'saveThoughts']);    
     SimpleRouter::get('/logout', [UserController::class, 'logout']);
     SimpleRouter::get('/confirm', [SiteController::class,'confirm']);
+    SimpleRouter::post('/confirm', [UserController::class,'verifyConfirmationCode']);
     
 
      });
 
-SimpleRouter::group(['prefix'=> '/thoughts/labs'], function () {
+/* SimpleRouter::group(['prefix'=> '/thoughts/labs'], function () {
 
     SimpleRouter::get('/test', [Test::class,'getUserName']);
     SimpleRouter::get('/test2', [Test2::class,'testarFuncao']);
@@ -46,7 +47,7 @@ SimpleRouter::group(['prefix'=> '/thoughts/labs'], function () {
 
 
 
-});
+}); */
 
  
 

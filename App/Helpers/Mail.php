@@ -1,14 +1,14 @@
-<?php
+  <?php /*
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function
-use HelpersTest\MailConfig;
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
  
 //Load Composer's autoloader (created by composer, not included with PHPMailer)
-require '../vendor/autoload.php';
- 
+require '../../vendor/autoload.php';
+
 //Create an instance; passing `true` enables exceptions
  
 
@@ -23,8 +23,7 @@ class Mail extends PHPMailer {
 
 
         $this->mail = new PHPMailer(true);
-        $this->config = new MailConfig();
-
+ 
     }
 
     public function sendMail () {
@@ -38,9 +37,8 @@ class Mail extends PHPMailer {
             $this->mail->SMTPAuth = true;
             $this->mail->Port = 587;
             $this->mail->Username = 'smtp@mailtrap.io';
-            $this->mail->Password = 'f3e9f0655c410da4905e28bb6befeae4';
+            $this->mail->Password = '11023826cfcc9d2974a972b47b91bfbe';
             $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
-            $this->mail->Port       = 587;         
             $this->mail->CharSet = 'UTF-8';
             
             //Recipients
@@ -75,7 +73,7 @@ class Mail extends PHPMailer {
 
     $mail = new Mail();
     $mail->sendMail(); 
-
+*/
 ?>
 
 

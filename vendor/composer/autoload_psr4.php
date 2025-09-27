@@ -11,7 +11,6 @@ return array(
     'Symfony\\Polyfill\\Ctype\\' => array($vendorDir . '/symfony/polyfill-ctype'),
     'Pecee\\' => array($vendorDir . '/pecee/simple-router/src/Pecee'),
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
-    'Labs\\HashLabs\\' => array('/Labs/HashLabs'),
     'Labs\\' => array('/Labs'),
     'Helpers\\' => array('/App/Helpers'),
     'App\\Controllers\\' => array('/App/Controllers'),
