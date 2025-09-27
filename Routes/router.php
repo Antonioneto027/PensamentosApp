@@ -26,6 +26,7 @@ SimpleRouter::group(['prefix' => '/thoughts'], function () {
     SimpleRouter::post('/save_thoughts', [ThoughtsController::class, 'saveThoughts']);    
     SimpleRouter::get('/logout', [UserController::class, 'logout']);
     SimpleRouter::get('/confirm', [SiteController::class,'confirm']);
+    SimpleRouter::post('/confirm', [UserController::class, 'verifyConfirmationCode' ]);
     //SimpleRouter::get('/confirm', [UserControllers::class,'']); //Criar a classe que envia o código hash por e-mail e confirma se o código está correto.
     
 
