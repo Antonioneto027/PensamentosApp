@@ -22,6 +22,13 @@ class UserController
 
     private $email;
 
+
+    private $email_hash;
+
+    private $password_hash;
+
+    private $created_at;
+
     public function __construct(){
         $db = new ConnectDb();
         $this->conn = $db->getConnection();
@@ -29,23 +36,23 @@ class UserController
     }
     
 
-     public function register()
+     public function register() //Alterar o nome (esta função apenas dá inicio ao processo de registro)
     {
         $conn = $this->conn;
         $message = '';
-        $toastClass = '';
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $email = $_POST["email"] ?? '';
             $this->email = $email;
-            $email_hash = $this->helper->hashEmail($email);
+            session_start();
+            $_SESSION['email_hash'] = $this->helper->hashEmail($email);
             $password = $_POST['password_hash'] ?? '';
-            $password_hash = password_hash($password, PASSWORD_DEFAULT);
-            $created_at = date("Y-m-d H:i:s"); // cria a data atual
+            $_SESSION['password_hash'] = password_hash($password, PASSWORD_DEFAULT);
+            $_SESSION['created_at']= date("Y-m-d H:i:s"); // cria a data atual
 
             // Verifica se e-mail já existe
             $checkEmailStmt = $conn->prepare("SELECT email_hash FROM users WHERE email_hash = ?");
-            $checkEmailStmt->execute([$email_hash]);
+            $checkEmailStmt->execute([$_SESSION['email_hash']]);
 
             if ($checkEmailStmt->fetch()) {
                 $message = "Este e-mail já está sendo utilizado em uma conta";
@@ -56,8 +63,9 @@ class UserController
          
 
                $randomHash = $this->helper->confCode();
-               $this->confirmationCode = $randomHash;
-               $mail = new PHPMailer(true);
+               session_start();
+               $_SESSION['confirmation_code'] = $randomHash;
+               $mail = new PHPMailer(exceptions: true);
                $mail->isSMTP();     
 
 
@@ -95,31 +103,7 @@ class UserController
 
                  }
                 
-
-                $verification = $this->verifyConfirmationCode();  
-
-                if ($verification) {
                 
-                 $stmt = $conn->prepare("INSERT INTO users (email_hash, password_hash, created_at) VALUES (?, ?, ?)");
-
-                if ($stmt->execute([$email_hash, $password_hash, $created_at])) {
-                        $message = "Account created successfully";
-                        $toastClass = "#28a745"; // Verde
-                        $button = '<a href="/thoughts/"><button>Click here to log in</button></a>';
-                        echo "<div style='background-color:$toastClass;color:white;padding:10px;margin:10px 0;'>
-                                $message<br>$button
-                            </div>";
-                        return;  
-                    } else {
-                        $message = "Error: Não foi possível registrar";
-                        $toastClass = "#dc3545"; // Vermelho
-                    } 
-
-                } else {
-                     echo "<div style='background-color:$toastClass;color:white;padding:10px;margin:10px 0;'>
-                            Código Incorreto, tente nvoamente! <br>
-                        </div>";
-                }
         
             }
         }
@@ -127,16 +111,39 @@ class UserController
         echo "<div style='background-color:$toastClass;color:white;padding:10px;'>$message</div>";
     }
 
-    public function verifyConfirmationCode() {
-
-       $confirmationCode = $this->confirmationCode; //Código enviado por e-mail
+    public function verifyConfirmationCode() { //Alterar o nome: esta função finaliza o processo de registro
+       session_start();
+       $confirmationCode = $_SESSION['confirmation_code']; //Código enviado por e-mail  
        $code = $_POST['code'] ?? ''; //Código inserido no formulário
-        
+       $email_hash = $_SESSION['email_hash']; //NULL
+       $password_hash = $_SESSION['password_hash'];
+       $created_at = $_SESSION['created_at']; 
+       $toastClass = '';
        if ($confirmationCode === $code) {
-        return true;
+         $stmt = $this->conn->prepare("INSERT INTO users (email_hash, password_hash, created_at) VALUES (?, ?, ?)");
+         if ($stmt->execute([$email_hash, $password_hash, $created_at])) {
+                        $message = "Account created successfully";
+                        $toastClass = "#28a745"; // Verde
+                        $button = '<a href="/thoughts/"><button>Click here to log in</button></a>';
+                        echo "<div style='background-color:$toastClass;color:white;padding:10px;margin:10px 0;'>
+                                $message<br>$button
+                            </div>";
+                        header("location: /thoughts/list");
+                        session_destroy();
+                        
+                    } else {
+                        $message = "Error: Não foi possível registrar, tente outro e-mail";
+                        $toastClass = "#dc3545"; // Vermelho
+                         header("location: /thoughts/");
+                        session_destroy();
+                    } 
        } else {
-        return false;
+       echo "<div style='background-color:$toastClass;color:white;padding:10px;margin:10px 0;'>
+                            Código Incorreto, tente novamente! <br>
+                        </div>";
        }
+
+        
         
     }
 

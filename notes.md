@@ -14,4 +14,5 @@
 
 ----
 
-[ ] Verificar porque, após a confirmação do código, uma tela branca aparece e o usuário não é cadastrado. 
+[ x ] Verificar porque, após a confirmação do código, uma tela branca aparece e o usuário não é cadastrado. 
+[ ] Verificar o debug com as variáveis nas sessions.
