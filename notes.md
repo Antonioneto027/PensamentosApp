@@ -16,7 +16,9 @@
 
 [ x ] Verificar porque, após a confirmação do código, uma tela branca aparece e o usuário não é cadastrado. 
 [ x ] Verificar o debug com as variáveis nas sessions.
-[   ] Implementar o registro de pensamentos;
+[ x ] Implementar o registro de pensamentos;
+[   ] Inserir o módulo de exclusão de pensamentos; 
+[   ] Inserir o módulo de recuperação de senha;
 [   ] Compreender Fetch e bindValue - Embora eu sei que são necessários, ainda preciso entender como funcionam.
 
 
