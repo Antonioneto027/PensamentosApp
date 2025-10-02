@@ -16,7 +16,8 @@
             "App/Controllers/SiteController.php",
             "App/Controllers/ConnectDb.php",
             "App/Controllers/UserController.php",
-            "App/Helpers/Helper.php"
+            "App/Helpers/Helper.php",
+            "App/Controllers/ThoughtsController.php"
  
         
         ]

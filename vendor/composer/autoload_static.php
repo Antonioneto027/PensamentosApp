@@ -83,6 +83,7 @@ class ComposerStaticInit81a8c97a0e5abf0abb462913f4bef7b5
     public static $classMap = array (
         'App\\Controllers\\ConnectDb' => __DIR__ . '/../..' . '/App/Controllers/ConnectDb.php',
         'App\\Controllers\\SiteController' => __DIR__ . '/../..' . '/App/Controllers/SiteController.php',
+        'App\\Controllers\\ThoughtsController' => __DIR__ . '/../..' . '/App/Controllers/ThoughtsController.php',
         'App\\Controllers\\UserController' => __DIR__ . '/../..' . '/App/Controllers/UserController.php',
         'App\\Helpers\\Helper' => __DIR__ . '/../..' . '/App/Helpers/Helper.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',

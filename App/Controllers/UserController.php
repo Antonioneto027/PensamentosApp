@@ -23,11 +23,7 @@ class UserController
     private $email;
 
 
-    private $email_hash;
-
-    private $password_hash;
-
-    private $created_at;
+ 
 
     public function __construct(){
         $db = new ConnectDb();
@@ -150,16 +146,19 @@ class UserController
     public function login() {
             $conn = $this->conn;
 
-                
+          
             $email = $_POST['email'];
             $email_hash = $this->helper->hashEmail($email);
             $password = $_POST['password_hash'];
 
             $stmt = $conn->prepare("SELECT email_hash, password_hash FROM users WHERE email_hash = ?");
+         
             $stmt->execute([$email_hash]);
             $fetch = $stmt->fetch();
 
             if ($fetch && password_verify($password, $fetch['password_hash'])) {
+                session_start();    
+                $_SESSION['user_session'] = $email_hash;
                 header("location: /thoughts/list");
                 exit;
             } else {
@@ -191,7 +190,7 @@ class UserController
 
     public function logout() {
         $this->conn = null;
-      //  $_SESSION["username"] = null;
+        $_SESSION["user_session"] = null;
         session_abort();
         header("location: /thoughts/");
       

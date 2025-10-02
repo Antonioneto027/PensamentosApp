@@ -18,25 +18,28 @@ class ThoughtsController {
 
         try {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            //   $user_id = $_POST["id"];  
+                session_start();
+                $user_id =  $_SESSION['user_session'];
                 $cause = $_POST["cause"];  
                 $emotion = $_POST["emotion"];  
                 $intensity = $_POST["intensity"];  
-                $thoughts = $_POST["thoughts"];  
+                $thought1 = $_POST["thought1"] ?? "";  
+                $thought2 = $_POST["thought2"] ?? "";
+                $thought3 = $_POST["thought3"] ?? "";
                 $created_at = date("Y-m-d H:i:s");
 
-                $stmt1 = $conn->prepare("INSERT INTO emotions_log (cause, emotion, intensity, created_at) VALUES (?, ?, ?, ?)");
-                $stmt1->bindValue(1, $cause);
-                $stmt1->bindValue(2, $emotion);
-                $stmt1->bindValue(3, $intensity);
-                $stmt1->bindValue(4, $created_at);
+                $stmt1 = $conn->prepare("INSERT INTO emotions_log (user_id, cause, emotion, intensity, thought1, thought2, thought3, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt1->bindValue(1, $user_id);
+                $stmt1->bindValue(2, $cause);
+                $stmt1->bindValue(3, $emotion);
+                $stmt1->bindValue(4, $intensity);
+                $stmt1->bindValue(5, $thought1);
+                $stmt1->bindValue(6, $thought2);
+                $stmt1->bindValue(7, $thought3);
+                $stmt1->bindValue(8, $created_at);
                 $stmt1->execute();
-
-                $stmt2 = $conn->prepare("INSERT INTO thoughts_log (thoughts, created_at) VALUES (?, ?)");
-                $stmt2->bindValue(1, $thoughts);
-                $stmt2->bindValue(2, $created_at);
-                $stmt2->execute();
-            }
+                header("location: /thoughts/list");
+             }
         } catch (PDOException $e) {
             echo "Erro: " . $e->getMessage();
         }

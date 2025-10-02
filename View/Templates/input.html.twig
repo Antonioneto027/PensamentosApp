@@ -1,103 +1,93 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt">
 
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="color-scheme" content="light dark">
-        <link href="./View/css/style.css" rel="stylesheet" type="text/css">
-        <link href="./View/css/pico.min.css" rel="stylesheet" type="text/css">
-        <title>Thoughts - Your Thoughts</title>
-        <link rel="icon" type="image/x-icon" href="./View/assets/img/favicon.ico">
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <link href="./View/css/style.css" rel="stylesheet" type="text/css">
+    <link href="./View/css/pico.min.css" rel="stylesheet" type="text/css">
+    <title>Pensamentos - Seus Pensamentos</title>
+    <link rel="icon" type="image/x-icon" href="./View/assets/img/favicon.ico">
+</head>
 
-    <body>
-        <nav>
-            <ul>
-                <li>
-                    <strong>Thoughts</strong>
-                </li>
-                 
-            </a>
-        </li>
-    </body>
-</html></ul></nav><main><section class="container">
+<body>
+    <nav>
+        <ul>
+            <li>
+                <strong>Pensamentos</strong>
+            </li>
+        </ul>
+    </nav>
+    <main>
+        <section class="container">
 
-<form action="/thoughts/save_thoughts" method="post">
-    <label for="cause">
-        <strong>What've caused your emotion?</strong>
-    </label>
-    <input type="text" name="cause" placeholder="Insert the cause" aria-label="Text">
-    <label for="emotions">
-        <strong>Which emotions did you have?</strong>
-    </label>
-    <input type="text" name="emotion" placeholder="Insert the emotion" aria-label="Text">
-    <label for="intensity">
-        <strong>What's the intensity of your emotion?</strong>
-    </label>
-    <select name="intensity" id="intensity" aria-label="Intensity">
-        <option value="" disabled selected>Select the intensity</option>
-    </select>
-    <label for="thoughts">
-        <strong>Which thoughts did you have?</strong>
-    </label>
-    <fieldset id="form-container">
-        <label>
-            <input type="text" name="thoughts[]" placeholder="Insert a thought">
-        </label>
-    </fieldset>
+            <form action="/thoughts/save_thoughts" method="post">
+                <label for="cause">
+                    <strong>O que causou sua emoção?</strong>
+                </label>
+                <input type="text" name="cause" placeholder="Insira a causa" aria-label="Texto" required>
+                <label for="emotions">
+                    <strong>Quais emoções você sentiu?</strong>
+                </label>
+                <input type="text" name="emotion" placeholder="Insira a emoção" aria-label="Texto" required>
+                <label for="intensity">
+                    <strong>Qual a intensidade da sua emoção?</strong>
+                </label>
+                <select name="intensity" id="intensity" aria-label="Intensidade" required>
+                    <option value="" disabled selected>Selecione a intensidade</option>
+                </select>
+                <label>
+                    <strong>Quais pensamentos você teve?</strong>
+                </label>
+                <fieldset id="form-container"> <!-- Como inserir o pensamento nas 3 variáveis? --> 
+                    <label for="thought1">
+                        <input type="text" id="thought1" name="thought1" style="display: block" placeholder="Insira um pensamento" required>
+                    </label>
+                    <label for="thought2">
+                        <input type="text" id="thought2"  name="thought2" style="display: none"  placeholder="Insira um pensamento">
+                    </label>
+                    <label for="thought3">
+                        <input type="text" id="thought3"  name="thought3" style="display: none"  placeholder="Insira um pensamento">
+                    </label>
+                </fieldset>
 
-    <button type="button" onclick="GFG_Fun()">+</button>
+                <button type="button" id="add-thought-btn" onclick="mostrarProximo()">+</button>
 
-    <div class="button-wdt">
-        <input type="submit" value="Save">
-    </div>
-  
-        
-
-</form>
-<div>
- <a href="/thoughts/list">
-                    <button style="background-color: #fe5b30 !important">Cancel</button>
+                <div class="button-wdt">
+                    <input type="submit" value="Salvar">
+                </div>
+            </form>
+            <div>
+                <a href="/thoughts/list">
+                    <button style="background-color: #fe5b30 !important">Cancelar</button>
                 </a>
-
-</div>
-
- 
-
-</section></body></body></html></main><script>document.addEventListener("DOMContentLoaded", function () {
+            </div>
+        </section>
+    </main>
+<script>
     const MAX_FIELDS = 3;
+    let ids = ["thought1", "thought2", "thought3"];
+    let clicks = 1;  
 
-    window.GFG_Fun = function () {
-        const container = document.getElementById("form-container");
-        const currentFields = container.querySelectorAll('input[name="thoughts[]"]').length;
-
-        if (currentFields >= MAX_FIELDS) {
-            alert("You can only insert up to " + MAX_FIELDS + " thoughts.");
-            return;
+    function mostrarProximo() {
+        if (clicks < ids.length) {
+            document.getElementById(ids[clicks]).style.display = "block";
+            clicks++;
+            if (clicks === MAX_FIELDS) {
+                document.getElementById('add-thought-btn').disabled = true;
+            }
         }
+    }
 
-        // Cria o label
-        const label = document.createElement("label");
-
-        // Cria o input
-        const input = document.createElement("input");
-        input.type = "text";
-        input.name = "thoughts[]";
-        input.placeholder = "Insert a thought";
-
-        // Adiciona input ao label
-        label.appendChild(input);
-
-        // Adiciona label ao container
-        container.appendChild(label);
-    };
-});
-
-const select = document.getElementById('intensity');
-for (let i = 1; i <= 10; i++) {
-    const option = document.createElement('option');
-    option.value = i;
-    option.textContent = i;
-    select.appendChild(option);
-}</script></body></html>
+    // Populate intensity select options
+    const select = document.getElementById('intensity');
+    for (let i = 1; i <= 10; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = i;
+        select.appendChild(option);
+    }
+</script>
+</body>
+</html>
