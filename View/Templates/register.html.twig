@@ -13,24 +13,22 @@
     </head>
 
     <body>
-        <nav>
-            <ul>
+       <nav class="container">
+            <ul class="container">
                 <li>
                     <strong>Pensamentos</strong>
                 </li>
             </ul>
         </nav>
-        <main class="centralize">
+        <main class="centralize container">
             <form method="POST" action="/thoughts/register" class="centralize"> <!-- IMPORTANTE -->
-            <input type="email" name="email" placeholder="Your E-mail" aria-label="Email" autocomplete="email" required>
-            <input type="password" name="password_hash" placeholder="Password" aria-label="Password" required>
-            
-            <div class="button-wdt">
-                <input type="submit" value="Register">
-            </div>
-        </form>
-
-
+                <input type="email" name="email" placeholder="Your E-mail" aria-label="Email" autocomplete="email" required>
+                <input type="password" name="password_hash" placeholder="Password" aria-label="Password" required>
+                
+                <div class="button-wdt">
+                    <input type="submit" value="Register">
+                </div>
+           </form>
         </main>
     </body>
 </html>

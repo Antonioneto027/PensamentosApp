@@ -12,13 +12,16 @@
 </head>
 
 <body>
-    <nav>
-        <ul>
-            <li>
-                <strong>Pensamentos</strong>
-            </li>
-        </ul>
-    </nav>
+ <nav class="container">
+            <ul class="container">
+                <li>
+                    <strong>Pensamentos</strong>
+                </li>
+                <li>
+                    <a href='/thoughts/logout'> Sair </a> 
+                </li> 
+            </ul>
+        </nav>
     <main>
         <section class="container">
 
@@ -51,14 +54,13 @@
                         <input type="text" id="thought3"  name="thought3" style="display: none"  placeholder="Insira um pensamento">
                     </label>
                 </fieldset>
-
-                <button type="button" id="add-thought-btn" onclick="mostrarProximo()">+</button>
+            </form>
+            <div class="centralize container">
+              <button type="button" id="add-thought-btn" onclick="mostrarProximo()">+</button>
 
                 <div class="button-wdt">
                     <input type="submit" value="Salvar">
                 </div>
-            </form>
-            <div>
                 <a href="/thoughts/list">
                     <button style="background-color: #fe5b30 !important">Cancelar</button>
                 </a>

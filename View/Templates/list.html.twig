@@ -12,30 +12,57 @@
 
     </head>
 
-    <body>
-        <nav>
-            <ul>
+    <body class="container">
+        <nav class="container">
+            <ul class="container">
                 <li>
                     <strong>Pensamentos</strong>
                 </li>
                 <li>
                     <a href='/thoughts/logout'> Sair </a> 
                 </li> 
-             <!--   <li>
-                    <p> Nome: {{username}} </p>
-                </li -->
             </ul>
         </nav>
-        <main class="centralize">
+        <main class="">
 
-            <section class="centralize">
+            <section class="">
 
-                <h1>
-                   A lista será exibida aqui
-                </h1>
-                <a href="/thoughts/my_thoughts">
-                    <button>Adicionar seus pensamentos</button>
-                </a>
+             <div class="overflow-auto">     
+                <table>
+                
+                        <tr>
+                            <th>Causa</th>
+                            <th>Emoções</th>
+                            <th>Intensidade</th>
+                            <th>Pensamento 1</th>
+                            <th>Pensamento 2</th>
+                            <th>Pensamento 3</th>
+                            <th>Data do Registro</th>               
+                        </tr>
+                    
+                        {% for row in result %}
+
+                        <tr>
+                            <td>{{ row.cause }}</td>
+                            <td>{{ row.emotion }}</td>
+                            <td>{{ row.intensity }}</td>
+                            <td>{{ row.thought1 }}</td>
+                            <td>{{ row.thought2 }}</td>
+                            <td>{{ row.thought3 }}</td>
+                            <td>{{ row.created_at | date ('d/m/Y H:i')}}</td>
+                        </tr>
+                        {% endfor %}
+
+                </table>
+            </div>   
+
+                        
+                            <div class="container centralize">
+                                <a href="/thoughts/my_thoughts" class>
+                                    <button class="">Adicionar seus pensamentos</button>
+                                </a>
+                            </div>
+                   
 
             </section>
 

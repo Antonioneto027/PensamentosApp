@@ -44,6 +44,25 @@ class ThoughtsController {
             echo "Erro: " . $e->getMessage();
         }
     }
+
+    public function listThoughts() {
+        $conn = $this->conn;
+        session_start();
+        $user_id =  $_SESSION['user_session'];
+        try {
+            $stmt1 = $conn->prepare("SELECT * FROM emotions_log WHERE user_id = ? ORDER BY created_at DESC");
+            $stmt1->bindValue(1, $user_id);
+            $stmt1->execute();
+             
+           return $stmt1;
+         
+        } catch (PDOException $e) {
+            echo "Erro: ". $e->getMessage();
+        } finally {
+            $conn = null;
+        }
+
+    }
 }
 
 ?>

@@ -28,7 +28,7 @@ SimpleRouter::group(['prefix' => '/thoughts'], function () {
     SimpleRouter::get('/logout', [UserController::class, 'logout']);
     SimpleRouter::get('/confirm', [SiteController::class,'confirm']);
     SimpleRouter::post('/confirm', [UserController::class, 'verifyConfirmationCode' ]);
-     
+    SimpleRouter::get('/list', [ThoughtsController::class,'listThoughts']);
      
     
 

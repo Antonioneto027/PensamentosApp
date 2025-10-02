@@ -27,12 +27,15 @@ class SiteController
     }
 
        public function list_thoughts(): void
-    {
-        session_start();
-     //   $username = $_SESSION['username'];
-        echo $this->twig->render('list.html.twig');
-        session_abort();
-    }
+        {
+                if ($_SERVER['REQUEST_URI'] === '/thoughts/list') {
+                $controller = new \App\Controllers\ThoughtsController();
+                $result = $controller->listThoughts();
+                $rows = $result->fetchAll(\PDO::FETCH_ASSOC);
+                echo $this->twig->render('list.html.twig', ['result' => $rows]);
+                session_abort();
+            }
+        }
 
     public function register(): void
     {
