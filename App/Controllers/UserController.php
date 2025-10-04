@@ -51,9 +51,18 @@ class UserController
             $checkEmailStmt->execute([$_SESSION['email_hash']]);
 
             if ($checkEmailStmt->fetch()) {
-                $message = "Este e-mail já está sendo utilizado em uma conta";
-                $toastClass = "#007bff"; // Azul
-                $button = "<button> Clique aqui para voltar para a página de login </button>";
+                
+                $msg = '
+                <article class="container" style="max-width: 400px; margin: 2rem auto;">
+                    <div class="bg-primary" style="padding: 1rem; border-radius: 8px; color: #0734ffff; text-align: center;">
+                        <span>Este e-mail já está sendo utilizado em outra conta</span>
+                        <br><br>
+                        <a href="/thoughts/register" role="button" class="secondary"><button>Tentar com outro e-mail    </button></a>
+                    </div>
+                </article>
+                ';
+
+                echo $msg;
             } else {
                 // Insere novo usuário
          
@@ -104,7 +113,7 @@ class UserController
             }
         }
 
-        echo "<div style='background-color:$toastClass;color:white;padding:10px;'>$message</div>";
+    //    echo "<div style='background-color:$toastClass;color:white;padding:10px;'>$message</div>";
     }
 
     public function verifyConfirmationCode() { //Alterar o nome: esta função finaliza o processo de registro
@@ -162,7 +171,17 @@ class UserController
                 header("location: /thoughts/list");
                 exit;
             } else {
-                echo "Login inválido";
+                   $msg = '
+                <article class="container" style="max-width: 400px; margin: 2rem auto;">
+                    <div class="bg-primary" style="padding: 1rem; border-radius: 8px; color: #0734ffff; text-align: center;">
+                        <span>Login inválido!</span>
+                        <br><br>
+                        <a href="/thoughts/register" role="button" class="secondary"><button> Tente novamente </button></a>
+                    </div>
+                </article>
+                ';
+
+                echo $msg;
             }
     }
 
@@ -209,4 +228,3 @@ class UserController
 
 
 
- 

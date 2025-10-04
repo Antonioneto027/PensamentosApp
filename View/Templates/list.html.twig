@@ -1,71 +1,103 @@
 <!doctype html>
 <html lang="pt">
 
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="color-scheme" content="light">
-        <link href="./View/css/style.css" rel="stylesheet" type="text/css">
-        <link href="./View/css/pico.min.css" rel="stylesheet" type="text/css">
-        <title>Pensamentos - Uma Ferramenta Aberta de TCC</title>
-        <link rel="icon" type="image/x-icon" href="View/assets/img/favicon.ico">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <link href="./View/css/style.css" rel="stylesheet" type="text/css">
+    <link href="./View/css/pico.min.css" rel="stylesheet" type="text/css">
+    <title>Pensamentos - Uma Ferramenta Aberta de TCC</title>
+    <link rel="icon" type="image/x-icon" href="View/assets/img/favicon.ico">
 
-    </head>
+    <style>
+        .oculto {
+            display: none;
+        }
+    </style>
+</head>
 
-    <body class="container">
-        <nav class="container">
-            <ul class="container">
-                <li>
-                    <strong>Pensamentos</strong>
-                </li>
-                <li>
-                    <a href='/thoughts/logout'> Sair </a> 
-                </li> 
-            </ul>
-        </nav>
-        <main class="">
+<body class="container">
+    <nav class="container">
+        <ul class="container">
+            <li>
+                <strong>Pensamentos</strong>
+            </li>
+            <li>
+                <a href='/thoughts/logout'> Sair </a>
+            </li>
+        </ul>
+    </nav>
 
-            <section class="">
+    <main>
+        <section>
+            <form action="/thoughts/delete" method="post">
+                <div class="overflow-auto">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-excluir oculto">Selecionar</th>
+                                <th>Causa</th>
+                                <th>Emoções</th>
+                                <th>Intensidade</th>
+                                <th>Pensamento 1</th>
+                                <th>Pensamento 2</th>
+                                <th>Pensamento 3</th>
+                                <th>Data do Registro</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in result %}
+                            <tr>
+                                <td class="col-excluir oculto">
+                                    <input type="checkbox" name="ids[]" value="{{ row.id }}">
+                                </td>
+                                <td>{{ row.cause }}</td>
+                                <td>{{ row.emotion }}</td>
+                                <td>{{ row.intensity }}</td>
+                                <td>{{ row.thought1 }}</td>
+                                <td>{{ row.thought2 }}</td>
+                                <td>{{ row.thought3 }}</td>
+                                <td>{{ row.created_at | date('d/m/Y H:i') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
 
-             <div class="overflow-auto">     
-                <table>
-                
-                        <tr>
-                            <th>Causa</th>
-                            <th>Emoções</th>
-                            <th>Intensidade</th>
-                            <th>Pensamento 1</th>
-                            <th>Pensamento 2</th>
-                            <th>Pensamento 3</th>
-                            <th>Data do Registro</th>               
-                        </tr>
-                    
-                        {% for row in result %}
+                <div class="container centralize" style="margin-top: 1rem;">
+                    <a href="/thoughts/my_thoughts">
+                        <button type="button" id="btn-adicionar">Adicionar seus pensamentos</button>
+                    </a>
 
-                        <tr>
-                            <td>{{ row.cause }}</td>
-                            <td>{{ row.emotion }}</td>
-                            <td>{{ row.intensity }}</td>
-                            <td>{{ row.thought1 }}</td>
-                            <td>{{ row.thought2 }}</td>
-                            <td>{{ row.thought3 }}</td>
-                            <td>{{ row.created_at | date ('d/m/Y H:i')}}</td>
-                        </tr>
-                        {% endfor %}
+                    <button type="submit" id="btn-excluir" style="display: none;">Excluir</button>
+                    <br>
+                    <button type="button" style="background-color: #fe5b30;" onclick="showCheckbox()" id="btn-iniciar-exclusao">Excluir pensamentos</button>
+                    <button type="button" style="background-color: #fe5b30; display: none;" onclick="hideCheckbox()" id="btn-cancelar">Cancelar</button>
+                </div>
+            </form>
 
-                </table>
-            </div>   
+            <script>
+                function showCheckbox() {
+                    document.querySelectorAll('.col-excluir').forEach(el => el.classList.remove('oculto'));
 
-                        
-                            <div class="container centralize">
-                                <a href="/thoughts/my_thoughts" class>
-                                    <button class="">Adicionar seus pensamentos</button>
-                                </a>
-                            </div>
-                   
+                    document.getElementById("btn-adicionar").style.display = "none";
+                    document.getElementById("btn-iniciar-exclusao").style.display = "none";
+                    document.getElementById("btn-cancelar").style.display = "inline-block";
+                    document.getElementById("btn-excluir").style.display = "inline-block";
+                }
 
-            </section>
+                function hideCheckbox() {
+                    document.querySelectorAll('.col-excluir').forEach(el => el.classList.add('oculto'));
 
-        </main>
-    </body>
+                    document.getElementById("btn-adicionar").style.display = "inline-block";
+                    document.getElementById("btn-iniciar-exclusao").style.display = "inline-block";
+                    document.getElementById("btn-cancelar").style.display = "none";
+                    document.getElementById("btn-excluir").style.display = "none";
+                }
+            </script>
+        </section>
+    </main>
+</body>
+
 </html>

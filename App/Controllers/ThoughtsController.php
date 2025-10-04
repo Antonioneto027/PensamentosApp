@@ -63,6 +63,34 @@ class ThoughtsController {
         }
 
     }
+
+
+   public function deleteThoughts() {
+    $conn = $this->conn;
+    session_start();
+
+    try {
+        if (!empty($_POST['ids'])) {
+            $ids = $_POST['ids'];
+
+            $placeholders = implode(',', array_fill(0, count($ids), '?'));
+            $stmt = $conn->prepare("DELETE FROM emotions_log WHERE id IN ($placeholders)");
+            $stmt->execute($ids);
+
+            // Redireciona após exclusão
+            header('Location: /thoughts/list');
+            exit;
+        } else {
+            // Nenhum checkbox selecionado
+            header('Location: /thoughts/list');
+            exit;
+        }
+    } catch (PDOException $e) {
+        echo "Erro: " . $e->getMessage();
+    } finally {
+        $conn = null;
+    }
 }
 
-?>
+}  
+ 
