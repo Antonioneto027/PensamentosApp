@@ -57,7 +57,7 @@ class UserController
                     <div class="bg-primary" style="padding: 1rem; border-radius: 8px; color: #0734ffff; text-align: center;">
                         <span>Este e-mail já está sendo utilizado em outra conta</span>
                         <br><br>
-                        <a href="/thoughts/register" role="button" class="secondary"><button>Tentar com outro e-mail    </button></a>
+                        <a href="/thoughts/public/register" role="button" class="secondary"><button>Tentar com outro e-mail    </button></a>
                     </div>
                 </article>
                 ';
@@ -100,7 +100,7 @@ class UserController
 
                     $mail->send();  
 
-                    header("Location:/thoughts/confirm"); 
+                    header("Location:/thoughts/public/confirm"); 
                     
                 // echo 'Message has been sent';
                  } catch (Exception $e) {
@@ -116,11 +116,11 @@ class UserController
     //    echo "<div style='background-color:$toastClass;color:white;padding:10px;'>$message</div>";
     }
 
-    public function verifyConfirmationCode() { //Alterar o nome: esta função finaliza o processo de registro
+    public function verifyConfirmationCode() {  
        session_start();
-       $confirmationCode = $_SESSION['confirmation_code']; //Código enviado por e-mail  
-       $code = $_POST['code'] ?? ''; //Código inserido no formulário
-       $email_hash = $_SESSION['email_hash']; //NULL
+       $confirmationCode = $_SESSION['confirmation_code'];  
+       $code = $_POST['code'] ?? '';  
+       $email_hash = $_SESSION['email_hash'];  
        $password_hash = $_SESSION['password_hash'];
        $created_at = $_SESSION['created_at']; 
        $toastClass = '';
@@ -128,18 +128,18 @@ class UserController
          $stmt = $this->conn->prepare("INSERT INTO users (email_hash, password_hash, created_at) VALUES (?, ?, ?)");
          if ($stmt->execute([$email_hash, $password_hash, $created_at])) {
                         $message = "Account created successfully";
-                        $toastClass = "#28a745"; // Verde
-                        $button = '<a href="/thoughts/"><button>Click here to log in</button></a>';
+                        $toastClass = "#28a745";  
+                        $button = '<a href="/thoughts/public"><button>Click here to log in</button></a>';
                         echo "<div style='background-color:$toastClass;color:white;padding:10px;margin:10px 0;'>
                                 $message<br>$button
                             </div>";
-                        header("location: /thoughts/list");
+                        header("location: /thoughts/public/list");
                         session_destroy();
                         
                     } else {
                         $message = "Error: Não foi possível registrar, tente outro e-mail";
-                        $toastClass = "#dc3545"; // Vermelho
-                         header("location: /thoughts/");
+                        $toastClass = "#dc3545";  
+                         header("location: /thoughts/public");
                         session_destroy();
                     } 
        } else {
@@ -168,7 +168,7 @@ class UserController
             if ($fetch && password_verify($password, $fetch['password_hash'])) {
                 session_start();    
                 $_SESSION['user_session'] = $email_hash;
-                header("location: /thoughts/list");
+                header("location: /thoughts/public/list");
                 exit;
             } else {
                    $msg = '
@@ -176,7 +176,7 @@ class UserController
                     <div class="bg-primary" style="padding: 1rem; border-radius: 8px; color: #0734ffff; text-align: center;">
                         <span>Login inválido!</span>
                         <br><br>
-                        <a href="/thoughts/register" role="button" class="secondary"><button> Tente novamente </button></a>
+                        <a href="/thoughts/public/register" role="button" class="secondary"><button> Tente novamente </button></a>
                     </div>
                 </article>
                 ';
@@ -211,7 +211,7 @@ class UserController
         $this->conn = null;
         $_SESSION["user_session"] = null;
         session_abort();
-        header("location: /thoughts/");
+        header("location: /thoughts/public");
       
     }
 

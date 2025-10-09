@@ -38,7 +38,7 @@ class ThoughtsController {
                 $stmt1->bindValue(7, $thought3);
                 $stmt1->bindValue(8, $created_at);
                 $stmt1->execute();
-                header("location: /thoughts/list");
+                header("location: /thoughts/public/list");
              }
         } catch (PDOException $e) {
             echo "Erro: " . $e->getMessage();
@@ -78,11 +78,11 @@ class ThoughtsController {
             $stmt->execute($ids);
 
             // Redireciona após exclusão
-            header('Location: /thoughts/list');
+            header('Location: /thoughts/public/list');
             exit;
         } else {
             // Nenhum checkbox selecionado
-            header('Location: /thoughts/list');
+            header('Location: /thoughts/public/list');
             exit;
         }
     } catch (PDOException $e) {

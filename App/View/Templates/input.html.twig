@@ -5,27 +5,27 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <link href="./View/css/style.css" rel="stylesheet" type="text/css">
-    <link href="./View/css/pico.min.css" rel="stylesheet" type="text/css">
+    <link href="../public/css/style.css" rel="stylesheet" type="text/css">
+    <link href="../public/css/pico.min.css" rel="stylesheet" type="text/css">
     <title>Pensamentos - Seus Pensamentos</title>
-    <link rel="icon" type="image/x-icon" href="./View/assets/img/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="../public/assets/img/favicon.ico">
 </head>
 
 <body>
  <nav class="container">
             <ul class="container">
                 <li>
-                    <strong>Pensamentos</strong>
+                    <strong>Pensamentos App</strong>
                 </li>
                 <li>
-                    <a href='/thoughts/logout'> Sair </a> 
+                    <a href='/thoughts/public/logout'> Sair </a> 
                 </li> 
             </ul>
         </nav>
     <main>
         <section class="container">
 
-            <form action="/thoughts/save_thoughts" method="post">
+            <form action="/thoughts/public/save_thoughts" method="post">
                 <label for="cause">
                     <strong>O que causou sua emoção?</strong>
                 </label>
@@ -37,7 +37,7 @@
                 <label for="intensity">
                     <strong>Qual a intensidade da sua emoção?</strong>
                 </label>
-                <select name="intensity" id="intensity" aria-label="Intensidade" required>
+                <select name="intensity" id="intensity" aria-label="Intensidade" required style="text-align: center">
                     <option value="" disabled selected>Selecione a intensidade</option>
                 </select>
                 <label>
@@ -54,17 +54,18 @@
                         <input type="text" id="thought3"  name="thought3" style="display: none"  placeholder="Insira um pensamento">
                     </label>
                 </fieldset>
-                <button type="button" id="add-thought-btn" onclick="mostrarProximo()">+</button>
-
-                <div class="button-wdt">
+                
+                <div class="button-group">
+                    <button type="button" id="add-thought-btn" onclick="mostrarProximo()">Adicionar mais um pensamento</button>
+                    
                     <input type="submit" value="Salvar">
+                    
+                     <a href="/thoughts/public/list" class="btn" style="background-color: #fe5b30 !important; text-align: center">
+                         Cancelar
+                     </a>
                 </div>
-               
             </form>
-                <a href="/thoughts/list">
-                    <button style="background-color: #fe5b30 !important">Cancelar</button>
-                </a>
-      
+                
         </section>
     </main>
 <script>

@@ -18,6 +18,10 @@
   
 }
 
+a {
+  text-decoration: none;
+}
+
 
  .centralize {
     
@@ -34,6 +38,9 @@
             text-align: center;
         }
          
+.centralize button {
+  width: 10px 25px;
+}
   
 .oculto {
   display: none;
@@ -41,9 +48,26 @@
 
 
  
-.button-wdt {
-  width: 50%;
-  }
+ .button-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 20rem;
+    margin: auto;
+    
+}
+
+.btn {
+    padding: 0.6rem 0.8rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    color: white;
+    
+}
  
 nav {
   align-items: center;
@@ -100,5 +124,4 @@ center {
 
 
 
- 
  

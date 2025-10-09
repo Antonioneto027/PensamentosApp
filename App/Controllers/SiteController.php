@@ -10,7 +10,7 @@ class SiteController
 
     public function __construct()
     {
-        $loader = new FilesystemLoader('View/Templates/');
+        $loader = new FilesystemLoader('../App/View/Templates');
         $this->twig = new Environment($loader);
     }
 
@@ -28,7 +28,7 @@ class SiteController
 
        public function list_thoughts(): void
         {
-                if ($_SERVER['REQUEST_URI'] === '/thoughts/list') {
+                if ($_SERVER['REQUEST_URI'] === '/thoughts/public/list') {
                 $controller = new \App\Controllers\ThoughtsController();
                 $result = $controller->listThoughts();
                 $rows = $result->fetchAll(\PDO::FETCH_ASSOC);

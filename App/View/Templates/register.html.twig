@@ -5,10 +5,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="color-scheme" content="light">
-        <link href="./View/css/style.css" rel="stylesheet" type="text/css">
-        <link href="./View/css/pico.min.css" rel="stylesheet" type="text/css">
+        <link href="../public/css/style.css" rel="stylesheet" type="text/css">
+        <link href="../public/css/pico.min.css" rel="stylesheet" type="text/css">
         <title>Pensamentos - Uma ferramenta livre para TCC</title>
-        <link rel="icon" type="image/x-icon" href="View/assets/img/favicon.ico">
+        <link rel="icon" type="image/x-icon" href="../public/assets/img/favicon.ico">
+
 
     </head>
 
@@ -21,20 +22,21 @@
             </ul>
         </nav>
         <main class="centralize container">
-            <form method="POST" action="/thoughts/register" class="centralize"> <!-- IMPORTANTE -->
+            <form method="POST" action="/thoughts/public/register" class="centralize"> <!-- IMPORTANTE -->
                 <input type="email" name="email" placeholder="Seu e-mail" aria-label="Email" autocomplete="email" required>
                 <input type="password" name="password_hash" placeholder="Senha" aria-label="Password" required>
                 
-                <div class="button-wdt container centralize">
+                <div class="button-group container">
                     <input type="submit" value="Register">
+                     <a href="/thoughts/public" class="btn" style="background-color: #fe5b30 !important; text-align: center" >
+                        Cancelar
+                      </a>
                 </div>
                 
                  
            </form>
             <div class="button-wdt container centralize">
-             <a href="/thoughts">
-                <button style="background-color: #fe5b30 !important">Cancelar</button>
-             </a>
+             
              </div>
         </main>
     </body>

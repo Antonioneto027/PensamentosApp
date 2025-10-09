@@ -5,10 +5,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="color-scheme" content="light">
-        <link href="./View/css/style.css" rel="stylesheet" type="text/css">
-        <link href="./View/css/pico.min.css" rel="stylesheet" type="text/css">
+        <link href="../public/css/style.css" rel="stylesheet" type="text/css">
+        <link href="../public/css/pico.min.css" rel="stylesheet" type="text/css">
         <title>Pensamentos - Uma ferramenta livre para TCC</title>
-        <link rel="icon" type="image/x-icon" href="./View/assets/img/favicon.ico">
+        <link rel="icon" type="image/x-icon" href="../public/assets/img/favicon.ico">
 
     </head>
 
@@ -19,19 +19,21 @@
             <section class="centralize login">
 
                 <div style="text-align: center">
-                    <img src="./View/assets/img/logo.png" width="120x120">
+                    <img src="../public/assets/img/logo.png" width="120x120">
                     <br>
                     <h2 class="cursor typewriter-animation">
                         Quase lá!
                     </h2>
                 </div>
                 <div class="container">
-                    <form method="POST" action="/thoughts/confirm" class="centralize container">
+                    <form method="POST" action="/thoughts/public/confirm" class="centralize container">
                         <label> Insira o Código de Confirmação que enviamos para o seu e-mail!</label>
-                        <input type="code" name="code" placeholder="Seu código aqui" arial-label="code" autocomplete="code">
-                            <div class="button-wdt">
+                        <input type="code" name="code" placeholder="Seu código aqui" arial-label="code" autocomplete="code" style="max-width: 30%; text-align: center">
+                            <div class="centralize button-group">
                                 <input type="submit" value="Verificar">
+                                 <a href='/thoughts/public/logout'> Desistir e voltar à tela de login </a>
                             </div>
+                            
                     </div>
                  
             

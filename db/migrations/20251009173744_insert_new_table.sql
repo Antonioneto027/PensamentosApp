@@ -1,12 +1,4 @@
-CREATE TABLE users (
-    id INT PRIMARY KEY AUTO_INCREMENT, 
-    email_hash VARCHAR(255) NOT NULL, 
-    password_hash VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
-);
-
-
-CREATE TABLE emotions_log (
+CREATE TABLE emotions_log2 (
 
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_id VARCHAR(255) NOT NULL, 

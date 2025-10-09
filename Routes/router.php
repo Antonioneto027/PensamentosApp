@@ -13,10 +13,10 @@ use Pecee\SimpleRouter\SimpleRouter;
 
 
  
-SimpleRouter::get('/thoughts/', callback: [SiteController::class, 'index']);
+SimpleRouter::get('/thoughts/public', callback: [SiteController::class, 'index']);
 
   
-SimpleRouter::group(['prefix' => '/thoughts'], function () {
+SimpleRouter::group(['prefix' => '/thoughts/public'], function () {
     SimpleRouter::get('/my_thoughts',  [SiteController::class,'my_thoughts']);
     SimpleRouter::post('/my_thoughts',  [ThoughtsController::class,'saveThoughts']);
     SimpleRouter::get('/list', [SiteController::class,'list_thoughts']);    
@@ -29,7 +29,7 @@ SimpleRouter::group(['prefix' => '/thoughts'], function () {
     SimpleRouter::get('/confirm', [SiteController::class,'confirm']);
     SimpleRouter::post('/confirm', [UserController::class, 'verifyConfirmationCode' ]);
     SimpleRouter::get('/list', [ThoughtsController::class,'listThoughts']);
-    SimpleRouter::post('/delete', callback: [ThoughtsController::class,'deleteThoughts']);
+    SimpleRouter::post('/delete',  [ThoughtsController::class,'deleteThoughts']);
   
 
 

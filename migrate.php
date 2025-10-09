@@ -1,13 +1,23 @@
 <?php
 
  
-try {
-     
-    $pdo = new PDO('mysql:host=localhost;dbname=thoughts_db', 'root', '');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Erro de conexão com o banco de dados: " . $e->getMessage());
-}
+
+        $host = '127.0.0.1';
+        $db   = 'teste_thoughts_db';
+        $user = 'root';
+        $pass = '';
+        $charset = 'utf8mb4';
+
+        $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+
+        try {
+            $pdo = new PDO($dsn, $user, $pass, [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+            ]);
+        } catch (PDOException $e) {
+            die('Erro ao conectar: ' . $e->getMessage());
+        }
 
  
 $stmt = $pdo->query("SELECT version FROM schema_migrations");
@@ -28,20 +38,20 @@ foreach ($migrationFiles as $file) {
     
     if (!in_array($fileName, $appliedVersions)) {
         
-        $pdo->beginTransaction();
+        
         
         try {
+         //   $pdo->beginTransaction();
             $sql = file_get_contents($file);
             $pdo->exec($sql);
-
-             $stmt = $pdo->prepare("INSERT INTO schema_migrations (version) VALUES (?)");
+            $stmt = $pdo->prepare("INSERT INTO schema_migrations (version) VALUES (?)");
             $stmt->execute([$fileName]);
 
-            $pdo->commit();
+         //   $pdo->commit();
             echo " -> Migração aplicada com sucesso: " . $fileName . "\n";
 
         } catch (Exception $e) {
-            $pdo->rollBack();
+        //    $pdo->rollBack();
             echo "ERRO ao aplicar a migração " . $fileName . ": " . $e->getMessage() . "\n";
             exit;
         }
