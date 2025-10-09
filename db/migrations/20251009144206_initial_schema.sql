@@ -1,0 +1,21 @@
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT, 
+    email_hash VARCHAR(255) NOT NULL, 
+    password_hash VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP CURRENT_TIMESTAMP NOT NULL
+)
+
+
+CREATE TABLE emotions_log (
+
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id VARCHAR(255) NOT NULL, 
+    cause VARCHAR(255) NOT NULL, 
+    emotion VARCHAR(255) NOT NULL, 
+    intensity INT(10) NOT NULL,
+    thought1 VARCHAR(255) NOT NULL, 
+    thought2 VARCHAR(255) NOT NULL, 
+    thought3 VARCHAR(255) NOT NULL, 
+    created_at TIMESTAMP CURRENT_TIMESTAMP NOT NULL
+
+)
