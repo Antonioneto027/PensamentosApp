@@ -2,10 +2,10 @@
 
  
 
-        $host = '127.0.0.1';
-        $db   = 'teste_thoughts_db';
-        $user = 'root';
-        $pass = '';
+        $host = $_ENV['DB_HOST'];
+        $db   = $_ENV['DB_NAME'];
+        $user = $_ENV['DB_USER'];
+        $pass = $_ENV['DB_PASS'];
         $charset = 'utf8mb4';
 
         $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
@@ -41,17 +41,17 @@ foreach ($migrationFiles as $file) {
         
         
         try {
-         //   $pdo->beginTransaction();
+          
             $sql = file_get_contents($file);
             $pdo->exec($sql);
             $stmt = $pdo->prepare("INSERT INTO schema_migrations (version) VALUES (?)");
             $stmt->execute([$fileName]);
 
-         //   $pdo->commit();
+       
             echo " -> Migração aplicada com sucesso: " . $fileName . "\n";
 
         } catch (Exception $e) {
-        //    $pdo->rollBack();
+       
             echo "ERRO ao aplicar a migração " . $fileName . ": " . $e->getMessage() . "\n";
             exit;
         }

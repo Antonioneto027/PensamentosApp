@@ -11,10 +11,10 @@ class ConnectDb
 
     public function __construct()
     {
-        $host = 'localhost';
-        $db   = 'thoughts_db';
-        $user = 'root';
-        $pass = '';
+        $host = $_ENV['DB_HOST'];
+        $db   = $_ENV['DB_NAME'];
+        $user = $_ENV['DB_USER'];
+        $pass = $_ENV['DB_PASS'];
         $charset = 'utf8mb4';
 
         $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

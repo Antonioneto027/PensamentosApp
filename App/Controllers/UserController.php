@@ -76,10 +76,10 @@ class UserController
 
                  try {
                     $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-                    $mail->Host = 'live.smtp.mailtrap.io';
+                    $mail->Host = $_ENV['MAIL_HOST'];
                     $mail->SMTPAuth = true;
-                    $mail->Username = 'smtp@mailtrap.io';
-                    $mail->Password = 'f3e9f0655c410da4905e28bb6befeae4';
+                    $mail->Username = $_ENV['MAIL_USER'];
+                    $mail->Password = $_ENV['MAIL_KEY'];
                   
                     $mail->Port = 2525;
                     $mail->CharSet = 'UTF-8';
@@ -87,9 +87,11 @@ class UserController
                     $to = $this->email; 
                     $subject = "Pensamentos App - Código de Confirmação";
                     $body = "Seu código de confirmação é: {$randomHash}";
+                    $mailAdress = $_ENV['MAIL_SEND'];
+                    $mailName = $_ENV['MAIL_NAME'];
 
                     // Recipients
-                    $mail->setFrom('no-reply@pensamentos.app.br', 'Pensamentos App');
+                    $mail->setFrom($mailAdress, $mailName);
                     $mail->addAddress($to);
 
                     // Content
