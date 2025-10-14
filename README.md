@@ -1,3 +1,6 @@
+# fAQ
+
+
 1. O que é o app Pensamentos?
 Pensamentos é uma aplicação web pensada para ajudar pacientes e terapeutas a identificar padrões repetitivos e disfuncionais de pensamento, auxiliando na superação do sofrimento mental. Ela utiliza como base a técnica de registro de pensamentos disfuncionais, da TCC, para manter um registro dos pensamentos e, posteriormente, trabalhá-los durante a sessão de terapia.
 
