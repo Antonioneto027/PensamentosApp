@@ -126,9 +126,11 @@ class UserController
        $password_hash = $_SESSION['password_hash'];
        $created_at = $_SESSION['created_at']; 
        $toastClass = '';
+        
        if ($confirmationCode === $code) {
          $stmt = $this->conn->prepare("INSERT INTO users (email_hash, password_hash, created_at) VALUES (?, ?, ?)");
          if ($stmt->execute([$email_hash, $password_hash, $created_at])) {
+                        $_SESSION['user_session'] = $email_hash;
                         $message = "Account created successfully";
                         $toastClass = "#28a745";  
                         $button = '<a href="/thoughts/public"><button>Click here to log in</button></a>';
@@ -136,7 +138,7 @@ class UserController
                                 $message<br>$button
                             </div>";
                         header("location: /thoughts/public/list");
-                        session_destroy();
+                        
                         
                     } else {
                         $message = "Error: Não foi possível registrar, tente outro e-mail";
@@ -157,7 +159,7 @@ class UserController
     public function login() {
             $conn = $this->conn;
 
-          
+            session_start();   
             $email = $_POST['email'];
             $email_hash = $this->helper->hashEmail($email);
             $password = $_POST['password_hash'];
@@ -168,8 +170,8 @@ class UserController
             $fetch = $stmt->fetch();
 
             if ($fetch && password_verify($password, $fetch['password_hash'])) {
-                session_start();    
-                $_SESSION['user_session'] = $email_hash;
+                  
+                $_SESSION['user_session'] = $email_hash; //Não identifica a variável.
                 header("location: /thoughts/public/list");
                 exit;
             } else {
@@ -184,6 +186,7 @@ class UserController
                 ';
 
                 echo $msg;
+                session_destroy();
             }
     }
 
@@ -206,7 +209,7 @@ class UserController
             return "Usuário não encontrado"; //Remover
         }
           
-    }
+    }2025
 */
 
     public function logout() {
