@@ -1,4 +1,4 @@
-# fAQ
+# FAQ
 
 
 1. O que é o app Pensamentos?
