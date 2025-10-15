@@ -13,7 +13,7 @@ steps:
     commands:
       - echo "${CI_REPO}"
       - echo "$PWD"
-      - composer --no-interaction install
+      - composer --no-interaction -vvv install
 
   - name: deploy
     image: instrumentisto/rsync-ssh
@@ -35,4 +35,4 @@ steps:
       - echo "  StrictHostKeyChecking no" >> ~/.ssh/config
 
       # Rsync the directory
-      - rsync -e ssh -avz --delete --stats --progress . $SSH_USER@$SSH_HOST:$REMOTE_PATH/
+      - rsync -e ssh -avz --delete --stats ./App ./Routes ./public ./vendor  $SSH_USER@$SSH_HOST:$REMOTE_PATH/
