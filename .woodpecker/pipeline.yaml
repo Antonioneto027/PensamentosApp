@@ -1,0 +1,38 @@
+when:
+  - event: [push, manual]
+    branch: main
+
+
+steps:
+  - name: build
+    image: cr.isacloud.cc/php-fpm:8
+    environment:
+      CGO: 0
+      GOOS: linux
+      GOARCH: amd64
+    commands:
+      - echo "${CI_REPO}"
+      - echo "$PWD"
+      - composer --no-interaction install
+
+  - name: deploy
+    image: instrumentisto/rsync-ssh
+    environment:
+      SSH_HOST: srv-04.isacloud.cc
+      SSH_USER: deploy
+      REMOTE_PATH: /mnt/data/www/pensamentos.app.br
+      SSH_PRIVATE_KEY:
+        from_secret: deploy_user_key
+    commands:
+      # Setup SSH
+      - mkdir -p ~/.ssh
+      - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+      - chmod 600 ~/.ssh/id_rsa
+      - cat ~/.ssh/id_rsa
+
+      # Optional: disable host key checking (for CI)
+      - echo "Host *" > ~/.ssh/config
+      - echo "  StrictHostKeyChecking no" >> ~/.ssh/config
+
+      # Rsync the directory
+      - rsync -e ssh -avz --delete --stats --progress . $SSH_USER@$SSH_HOST:$REMOTE_PATH/
