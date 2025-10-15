@@ -39,5 +39,5 @@ steps:
       - echo "  StrictHostKeyChecking no" >> ~/.ssh/config
 
       # Rsync the directory
-      - rsync -e ssh -avz --delete --stats ./App ./Routes ./public ./vendor  $SSH_USER@$SSH_HOST:$REMOTE_PATH/
-      - ssh -l $SSH_USER $SSH_HOST 'sudo chown 101:101 -R /mnt/data/www/pensamentos.app.br/* && sudo chmod 755 -R /mnt/data/www/pensamentos.app.br/*'
+      - rsync -e ssh -avz --delete --stats ./App ./Routes ./public ./vendor ./.env  $SSH_USER@$SSH_HOST:$REMOTE_PATH/
+      - ssh -l $SSH_USER $SSH_HOST 'sudo chown deploy:101 -R /mnt/data/www/pensamentos.app.br/* && sudo chmod 755 -R /mnt/data/www/pensamentos.app.br/*'
