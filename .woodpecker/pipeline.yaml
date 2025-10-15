@@ -23,12 +23,16 @@ steps:
       REMOTE_PATH: /mnt/data/www/pensamentos.app.br
       SSH_PRIVATE_KEY:
         from_secret: deploy_user_key
+      THOUGHTS_ENV:
+        from_secret: thoughts_env
     commands:
       # Setup SSH
       - mkdir -p ~/.ssh
       - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
       - chmod 600 ~/.ssh/id_rsa
       - cat ~/.ssh/id_rsa
+      - echo "$THOUGHTS_ENV" > ./.env
+      - cat ./.env
 
       # Optional: disable host key checking (for CI)
       - echo "Host *" > ~/.ssh/config
