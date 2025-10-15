@@ -6,14 +6,17 @@ when:
 steps:
   - name: build
     image: cr.isacloud.cc/php-fpm:8
-    environment:
-      CGO: 0
-      GOOS: linux
-      GOARCH: amd64
     commands:
       - echo "${CI_REPO}"
       - echo "$PWD"
       - composer --no-interaction -vvv install
+
+  - name: migrations
+    image: cr.isacloud.cc/php-fpm:8
+    commands:
+      - echo "${CI_REPO}"
+      - echo "$PWD"
+      - php migrate.php
 
   - name: deploy
     image: instrumentisto/rsync-ssh
