@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <link href="../public/css/style.css" rel="stylesheet" type="text/css">
+    <link href="../public/css/pico.min.css" rel="stylesheet" type="text/css">
+    <title>Pensamentos - Uma Ferramenta Aberta de TCC</title>
+    <link rel="icon" type="image/x-icon" href="../public/assets/img/favicon.ico">
+
+
+    <style>
+        .oculto {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="container">
+    <nav class="container">
+        <ul class="container">
+            <li>
+                <strong>Pensamentos App</strong>
+            </li>
+            <li>
+                <a href='/thoughts/public/logout'> Sair </a>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <section>
+            <form action="/thoughts/public/delete" method="post">
+                <div class="overflow-auto">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-excluir oculto">Selecionar</th>
+                                <th>Causa</th>
+                                <th>Emoções</th>
+                                <th>Intensidade</th>
+                                <th>Pensamento 1</th>
+                                <th>Pensamento 2</th>
+                                <th>Pensamento 3</th>
+                                <th>Data do Registro</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in result %}
+                            <tr>
+                                <td class="col-excluir oculto">
+                                    <input type="checkbox" name="ids[]" value="{{ row.id }}">
+                                </td>
+                                <td>{{ row.cause }}</td>
+                                <td>{{ row.emotion }}</td>
+                                <td>{{ row.intensity }}</td>
+                                <td>{{ row.thought1 }}</td>
+                                <td>{{ row.thought2 }}</td>
+                                <td>{{ row.thought3 }}</td>
+                                <td>{{ row.created_at | date('d/m/Y H:i') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="button-group" style="margin-top: 1rem;" class="container">             
+                     
+                        <a href="/thoughts/public/my_thoughts" class="btn" id="btn-adicionar" type="button">
+                         Adicionar seus pensamentos 
+                        </a>
+                        <button type="submit" id="btn-excluir" style="display: none;" class="btn">Excluir</button>
+                        <button type="button" style="background-color: #fe5b30;" onclick="showCheckbox()" id="btn-iniciar-exclusao" class="btn">Excluir pensamentos</button>
+                        <button type="button" style="background-color: #fe5b30; display: none;" onclick="hideCheckbox()" id="btn-cancelar" class="btn">Cancelar</button>
+                   
+                </div>
+            </form>
+
+            <script>
+                function showCheckbox() {
+                    document.querySelectorAll('.col-excluir').forEach(el => el.classList.remove('oculto'));
+
+                    document.getElementById("btn-adicionar").style.display = "none";
+                    document.getElementById("btn-iniciar-exclusao").style.display = "none";
+                    document.getElementById("btn-cancelar").style.display = "inline-block";
+                    document.getElementById("btn-excluir").style.display = "inline-block";
+                }
+
+                function hideCheckbox() {
+                    document.querySelectorAll('.col-excluir').forEach(el => el.classList.add('oculto'));
+
+                    document.getElementById("btn-adicionar").style.display = "inline-block";
+                    document.getElementById("btn-iniciar-exclusao").style.display = "inline-block";
+                    document.getElementById("btn-cancelar").style.display = "none";
+                    document.getElementById("btn-excluir").style.display = "none";
+                }
+            </script>
+        </section>
+    </main>
+</body>
+
+</html>

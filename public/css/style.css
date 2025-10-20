@@ -1,0 +1,127 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.login {
+  margin-top: 4em; 
+  padding: 5em; color: #f1f1f1; 
+  font-family: 'Anonymous Pro',  
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+ 
+  
+}
+
+a {
+  text-decoration: none;
+}
+
+
+ .centralize {
+    
+    
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        flex-direction: column;
+     
+    }
+
+     input::placeholder {
+                 
+            text-align: center;
+        }
+         
+.centralize button {
+  width: 10px 25px;
+}
+  
+.oculto {
+  display: none;
+}
+
+
+ 
+ .button-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 20rem;
+    margin: auto;
+    
+}
+
+.btn {
+    padding: 0.6rem 0.8rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    color: white;
+    
+}
+ 
+nav {
+  align-items: center;
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.145);
+ 
+  width: 100%;
+}
+
+center {
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+/* Animations */
+
+@import url(https://fonts.googleapis.com/css?family=Anonymous+Pro);
+
+/* Cursor */
+.cursor{
+    position: relative;
+    width: 24em;
+    margin: 0 auto;
+    border-right: 2px solid rgba(255,255,255,.75);
+    font-size: 30px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    transform: translateY(-50%);    
+}
+/* Animation */
+.typewriter-animation {
+  animation: 
+    typewriter 0.75s steps(50) 1s 1 normal both, 
+    blinkingCursor 700ms steps(70) infinite normal
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 11.0ch; } 
+}
+
+@keyframes blinkingCursor {
+  from { border-right-color: rgba(5, 0, 0, 0.75); }
+  to { border-right-color: transparent; }
+}
+
+
+
+
+
+
+
+
+
+ 

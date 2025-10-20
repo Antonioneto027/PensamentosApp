@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <link href="../public/css/style.css" rel="stylesheet" type="text/css">
+    <link href="../public/css/pico.min.css" rel="stylesheet" type="text/css">
+    <title>Pensamentos - Seus Pensamentos</title>
+    <link rel="icon" type="image/x-icon" href="../public/assets/img/favicon.ico">
+</head>
+
+<body>
+ <nav class="container">
+            <ul class="container">
+                <li>
+                    <strong>Pensamentos App</strong>
+                </li>
+                <li>
+                    <a href='/thoughts/public/logout'> Sair </a> 
+                </li> 
+            </ul>
+        </nav>
+    <main>
+        <section class="container">
+
+            <form action="/thoughts/public/save_thoughts" method="post">
+                <label for="cause">
+                    <strong>O que causou sua emoção?</strong>
+                </label>
+                <input type="text" name="cause" placeholder="Insira a causa" aria-label="Texto" required>
+                <label for="emotions">
+                    <strong>Quais emoções você sentiu?</strong>
+                </label>
+                <input type="text" name="emotion" placeholder="Insira a emoção" aria-label="Texto" required>
+                <label for="intensity">
+                    <strong>Qual a intensidade da sua emoção?</strong>
+                </label>
+                <select name="intensity" id="intensity" aria-label="Intensidade" required style="text-align: center">
+                    <option value="" disabled selected>Selecione a intensidade</option>
+                </select>
+                <label>
+                    <strong>Quais pensamentos você teve?</strong>
+                </label>
+                <fieldset id="form-container">  
+                    <label for="thought1">
+                        <input type="text" id="thought1" name="thought1" style="display: block" placeholder="Insira um pensamento" required>
+                    </label>
+                    <label for="thought2">
+                        <input type="text" id="thought2"  name="thought2" style="display: none"  placeholder="Insira um pensamento">
+                    </label>
+                    <label for="thought3">
+                        <input type="text" id="thought3"  name="thought3" style="display: none"  placeholder="Insira um pensamento">
+                    </label>
+                </fieldset>
+                
+                <div class="button-group">
+                    <button type="button" id="add-thought-btn" onclick="mostrarProximo()">Adicionar mais um pensamento</button>
+                    
+                    <input type="submit" value="Salvar">
+                    
+                     <a href="/thoughts/public/list" class="btn" style="background-color: #fe5b30 !important; text-align: center">
+                         Cancelar
+                     </a>
+                </div>
+            </form>
+                
+        </section>
+    </main>
+<script>
+    const MAX_FIELDS = 3;
+    let ids = ["thought1", "thought2", "thought3"];
+    let clicks = 1;  
+
+    function mostrarProximo() {
+        if (clicks < ids.length) {
+            document.getElementById(ids[clicks]).style.display = "block";
+            clicks++;
+            if (clicks === MAX_FIELDS) {
+                document.getElementById('add-thought-btn').disabled = true;
+            }
+        }
+    }
+
+    // Populate intensity select options
+    const select = document.getElementById('intensity');
+    for (let i = 1; i <= 10; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = i;
+        select.appendChild(option);
+    }
+</script>
+</body>
+</html>

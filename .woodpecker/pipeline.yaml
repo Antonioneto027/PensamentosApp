@@ -1,0 +1,47 @@
+when:
+  - event: [push, manual]
+    branch: main
+
+
+steps:
+  - name: build
+    image: cr.isacloud.cc/php-fpm:8
+    commands:
+      - echo "${CI_REPO}"
+      - echo "$PWD"
+      - composer --no-interaction -vvv install
+
+  - name: migrations
+    image: cr.isacloud.cc/php-fpm:8
+    commands:
+      - echo "${CI_REPO}"
+      - echo "$PWD"
+      - php migrate.php
+
+  - name: deploy
+    image: instrumentisto/rsync-ssh
+    environment:
+      SSH_HOST: srv-04.isacloud.cc
+      SSH_USER: deploy
+      REMOTE_PATH: /mnt/data/www/pensamentos.app.br
+      SSH_PRIVATE_KEY:
+        from_secret: deploy_user_key
+      THOUGHTS_ENV:
+        from_secret: thoughts_env
+    commands:
+      # Setup SSH
+      - mkdir -p ~/.ssh
+      - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+      - chmod 600 ~/.ssh/id_rsa
+      - cat ~/.ssh/id_rsa
+      - echo "$THOUGHTS_ENV" > ./.env
+      - cat ./.env
+
+      # Optional: disable host key checking (for CI)
+      - echo "Host *" > ~/.ssh/config
+      - echo "  StrictHostKeyChecking no" >> ~/.ssh/config
+
+      # Rsync the directory
+      - rm -rf .git .gitignore .vscode .woodpecker
+      - rsync -e ssh -avz --delete --stats ./App ./Routes ./public ./vendor ./.env  $SSH_USER@$SSH_HOST:$REMOTE_PATH/
+      - ssh -l $SSH_USER $SSH_HOST 'sudo chown deploy:101 -R /mnt/data/www/pensamentos.app.br/* && sudo chmod 755 -R /mnt/data/www/pensamentos.app.br/*'
