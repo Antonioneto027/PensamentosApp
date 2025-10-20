@@ -1,4 +1,4 @@
-create table if not exists tenants (
+create table if not exists users (
   hash varchar(50),
   last_login timestamp,
   created_at timestamp,
