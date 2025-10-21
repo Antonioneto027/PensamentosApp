@@ -34,8 +34,11 @@ class UserController
 
      public function register() //Alterar o nome (esta função apenas dá inicio ao processo de registro)
     {
-        $conn = $this->conn;
-        $message = '';
+         require_once("../config.php");
+            $_SESSION["db"] = $_ENV["DB_NAME"];
+            $conn = new ConnectDb();
+            $db = $conn->getConnection();
+
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $email = $_POST["email"] ?? '';
@@ -47,7 +50,8 @@ class UserController
             $_SESSION['created_at']= date("Y-m-d H:i:s"); // cria a data atual
 
             // Verifica se e-mail já existe
-            $checkEmailStmt = $conn->prepare("SELECT email_hash FROM users WHERE email_hash = ?");
+            $checkEmailStmt = $db->prepare("SELECT email_hash FROM users WHERE email_hash = ?");
+
             $checkEmailStmt->execute([$_SESSION['email_hash']]);
 
             if ($checkEmailStmt->fetch()) {
@@ -131,12 +135,29 @@ class UserController
          $stmt = $this->conn->prepare("INSERT INTO users (email_hash, password_hash, created_at) VALUES (?, ?, ?)");
          if ($stmt->execute([$email_hash, $password_hash, $created_at])) {
                         $_SESSION['user_session'] = $email_hash;
-                        $message = "Account created successfully";
+                        require('../config.php');
+                        $_SESSION['db'] = $email_hash;
+                        $conn = new ConnectDb();
+                        $db = $conn->getConnection();
+                     $db->exec("
+                                        CREATE TABLE IF NOT EXISTS emotions_log (
+                                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                            cause VARCHAR(255) NOT NULL,
+                                            emotion VARCHAR(255) NOT NULL,
+                                            intensity INT NOT NULL,
+                                            thought1 VARCHAR(255) NOT NULL,
+                                            thought2 VARCHAR(255) NOT NULL,
+                                            thought3 VARCHAR(255) NOT NULL,
+                                            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                                        );
+                                    ");
+                     /*   $message = "Account created successfully";
                         $toastClass = "#28a745";  
                         $button = '<a href="/thoughts/public"><button>Click here to log in</button></a>';
                         echo "<div style='background-color:$toastClass;color:white;padding:10px;margin:10px 0;'>
                                 $message<br>$button
-                            </div>";
+                            </div>"; */
+                        
                         header("location: /thoughts/public/list");
                         
                         
@@ -208,7 +229,6 @@ class UserController
     }
 
 }
-
 
 
 
