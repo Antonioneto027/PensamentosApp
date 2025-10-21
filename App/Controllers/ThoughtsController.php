@@ -82,7 +82,9 @@ class ThoughtsController {
 
 
    public function deleteThoughts() {
-
+    
+    session_start(); 
+    require("../config.php");
     $conn = new ConnectDb();
     $db = $conn->getConnection();
 

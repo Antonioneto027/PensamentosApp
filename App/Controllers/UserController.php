@@ -200,6 +200,8 @@ class UserController
                 $_SESSION['user_session'] = $email_hash; //Não identifica a variável.
                 $stmt = $db->prepare("UPDATE users SET last_login = datetime('now') WHERE email_hash = ?");
                 $stmt->execute([$email_hash]);
+                require_once("../config.php");
+                $_SESSION["db"] = $email_hash;
                 header("location: /thoughts/public/list");
                 exit;
             } else {
