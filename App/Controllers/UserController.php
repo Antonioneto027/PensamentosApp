@@ -157,17 +157,12 @@ class UserController
     }
 
     public function login() {
-<<<<<<< HEAD
          
-=======
-            $conn = $this->conn;
->>>>>>> origin/main
 
             session_start();   
             $email = $_POST['email'];
             $email_hash = $this->helper->hashEmail($email);
             $password = $_POST['password_hash'];
-<<<<<<< HEAD
             
             require_once("../config.php");
             $_SESSION["db"] = $_ENV["DB_NAME"];
@@ -175,10 +170,6 @@ class UserController
             $db = $conn->getConnection();
 
             $stmt = $db->prepare("SELECT email_hash, password_hash FROM users WHERE email_hash = ?");
-=======
-
-            $stmt = $conn->prepare("SELECT email_hash, password_hash FROM users WHERE email_hash = ?");
->>>>>>> origin/main
          
             $stmt->execute([$email_hash]);
             $fetch = $stmt->fetch();
@@ -186,11 +177,8 @@ class UserController
             if ($fetch && password_verify($password, $fetch['password_hash'])) {
                   
                 $_SESSION['user_session'] = $email_hash; //Não identifica a variável.
-<<<<<<< HEAD
                 $stmt = $db->prepare("UPDATE users SET last_login = datetime('now') WHERE email_hash = ?");
                 $stmt->execute([$email_hash]);
-=======
->>>>>>> origin/main
                 header("location: /thoughts/public/list");
                 exit;
             } else {
@@ -199,11 +187,7 @@ class UserController
                     <div class="bg-primary" style="padding: 1rem; border-radius: 8px; color: #0734ffff; text-align: center;">
                         <span>Login inválido!</span>
                         <br><br>
-<<<<<<< HEAD
                         <a href="/thoughts/public/" role="button" class="secondary"><button> Tente novamente </button></a>
-=======
-                        <a href="/thoughts/public/register" role="button" class="secondary"><button> Tente novamente </button></a>
->>>>>>> origin/main
                     </div>
                 </article>
                 ';
@@ -214,29 +198,6 @@ class UserController
     }
 
 
-<<<<<<< HEAD
-=======
-  /*  public function getUserName() {
-        $conn = $this->conn;
-
-        $email = $_POST["email"];
-
-        $stmt = $conn->prepare("SELECT username FROM users WHERE email = ?");
-        $stmt-> execute([$email]);
-        
-        $return = $stmt->fetch(mode: PDO::FETCH_ASSOC);
-        
-        if ($return) {
-           session_start();
-           $_SESSION['username'] = $return["username"];
-           $_SESSION["hash"] =  hash('sha256', $return['username']); //Criar um código hash para que o usuário não consiga acessar o sistema via link
-        } else {
-            return "Usuário não encontrado"; //Remover
-        }
-          
-    }2025
-*/
->>>>>>> origin/main
 
     public function logout() {
         $this->conn = null;
