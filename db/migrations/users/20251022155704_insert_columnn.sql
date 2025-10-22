@@ -1,0 +1,2 @@
+ALTER TABLE emotions_log
+ADD COLUMN teste INTEGER;
