@@ -12,7 +12,7 @@ class ConnectDb
     public function __construct()
     {   
         session_start();
-        require('../config.php');   
+        require '/opt/lampp/htdocs/thoughts/config.php';
         $db_path = $dsn_path;
         $charset = 'utf8mb4';
         $dsn = "sqlite:$db_path";

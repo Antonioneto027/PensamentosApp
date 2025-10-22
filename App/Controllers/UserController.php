@@ -129,11 +129,12 @@ class UserController
        $email_hash = $_SESSION['email_hash'];  
        $password_hash = $_SESSION['password_hash'];
        $created_at = $_SESSION['created_at']; 
+       $last_login = date("Y-m-d H:i:s");
        $toastClass = '';
         
        if ($confirmationCode === $code) {
-         $stmt = $this->conn->prepare("INSERT INTO users (email_hash, password_hash, created_at) VALUES (?, ?, ?)");
-         if ($stmt->execute([$email_hash, $password_hash, $created_at])) {
+         $stmt = $this->conn->prepare("INSERT INTO users (email_hash, password_hash, created_at, last_login) VALUES (?, ?, ?, ?)");
+         if ($stmt->execute([$email_hash, $password_hash, $created_at, $last_login])) {
                         $_SESSION['user_session'] = $email_hash;
                         require('../config.php');
                         $_SESSION['db'] = $email_hash;
