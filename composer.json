@@ -11,6 +11,10 @@
             "Labs\\": "/Labs",
             "Helpers\\": "/App/Helpers/"
             
+<<<<<<< HEAD
+            
+=======
+>>>>>>> origin/main
           
         },
         "classmap": [
@@ -19,6 +23,10 @@
             "App/Controllers/UserController.php",
             "App/Helpers/Helper.php",
             "App/Controllers/ThoughtsController.php"
+<<<<<<< HEAD
+      
+=======
+>>>>>>> origin/main
  
         
         ]

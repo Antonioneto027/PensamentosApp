@@ -1,61 +1,111 @@
-<?php
+<?php 
+use Composer\Command\ExecCommand;
+?><?php
 
- 
+use App\Controllers\ConnectDb;
+require 'vendor/autoload.php';
 
-        $host = $_ENV['DB_HOST'];
-        $db   = $_ENV['DB_NAME'];
-        $user = $_ENV['DB_USER'];
-        $pass = $_ENV['DB_PASS'];
-        $charset = 'utf8mb4';
+$db_name = 'globals';
 
-        $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+$conn = chooseDb($db_name);
 
-        try {
-            $pdo = new PDO($dsn, $user, $pass, [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-            ]);
-        } catch (PDOException $e) {
-            die('Erro ao conectar: ' . $e->getMessage());
-        }
+$stmt = $conn->query("SELECT version FROM schema_migrations"); ;
 
- 
-$stmt = $pdo->query("SELECT version FROM schema_migrations");
- 
 $appliedVersions = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
 echo "Versões já aplicadas no banco de dados: " . (count($appliedVersions) > 0 ? implode(', ', $appliedVersions) : "Nenhuma") . "\n";
 
-$migrationFiles = glob('db/migrations/*.sql');
- 
-sort($migrationFiles);
 
-echo "Procurando por novas migrações...\n";
+$migrationFilesGeneral = glob('db/migrations/general/*.sql'); 
+sort($migrationFilesGeneral);
 
-foreach ($migrationFiles as $file) {
+foreach ($migrationFilesGeneral as $generalFile) {
   
-    $fileName = basename($file);
-    
-    if (!in_array($fileName, $appliedVersions)) {
-        
-        
-        
-        try {
-          
-            $sql = file_get_contents($file);
-            $pdo->exec($sql);
-            $stmt = $pdo->prepare("INSERT INTO schema_migrations (version) VALUES (?)");
-            $stmt->execute([$fileName]);
+    $generalFileName = basename($generalFile);
 
-       
-            echo " -> Migração aplicada com sucesso: " . $fileName . "\n";
+    if (!in_array($generalFileName, $appliedVersions)) {
+        try {
+            $sql = file_get_contents($generalFile);
+            $conn->exec($sql);
+            $stmt = $conn->prepare("INSERT INTO schema_migrations (version) VALUES (?)");
+            $stmt->execute([$generalFileName]);
 
         } catch (Exception $e) {
-       
-            echo "ERRO ao aplicar a migração " . $fileName . ": " . $e->getMessage() . "\n";
+            echo "ERRO ao aplicar a migração " . $generalFileName . ": " . $e->getMessage() . "\n";
             exit;
         }
     }
 }
 
-echo "Versionamento do banco de dados concluído.\n";
+echo "Versionamento do banco de dados {$db_name} concluído.\n";
+echo "Iniciando versionamento dos bancos de dados de usuários...\n";
+
+$migrationFilesUsers = glob('db/migrations/users/*.sql'); 
+sort($migrationFilesUsers);
+
+
+foreach ($migrationFilesUsers as $userFile) {
+    
+    $userFileName = basename($userFile);
+    $sql = file_get_contents($userFile); 
+
+    if (!in_array($userFileName, $appliedVersions)) {
+         
+        $dbToSwitch = glob('db/database/*.sqlite');
+        sort($dbToSwitch);
+
+            try { 
+                
+                foreach ($dbToSwitch as $db) {
+                
+                    $dbName = basename($db, ".sqlite");
+                    if ($dbName != 'globals') {
+
+                        $conn = chooseDb($dbName);
+                        $conn->exec($sql);
+                        $dbName = 'globals';
+                        $db = chooseDb($dbName);
+                        $stmt = $db->prepare("INSERT INTO schema_migrations (version) VALUES (?)");
+                        $stmt->execute([$userFileName]);
+                    }
+                   
+                }
+         } catch (Exception $e) {
+                echo "ERRO ao aplicar a migração " . $userFileName . ": " . $e->getMessage() . "\n";
+
+         }
+        
+    }
+  }
+
+echo "Concluído o versionamento dos bancos de usuários.\n";
+
+
+
+
+
+
+
+
+
+
+function chooseDb($db_name) {
+     
+     
+        if ($db_name == 'globals') {
+            session_start();
+            $_SESSION['db'] = 'globals';
+            require('config.php');
+            $db = new ConnectDb();
+            return $conn = $db->getConnection();
+            
+        } else {
+            session_start();
+            $_SESSION['db'] = $db_name;
+            require('config.php');
+            $db = new ConnectDb();
+          return  $conn = $db->getConnection();
+        }
+        
+         
+}

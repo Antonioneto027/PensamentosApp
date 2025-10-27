@@ -19,7 +19,8 @@ SimpleRouter::get('/thoughts/public', callback: [SiteController::class, 'index']
 SimpleRouter::group(['prefix' => '/thoughts/public'], function () {
     SimpleRouter::get('/my_thoughts',  [SiteController::class,'my_thoughts']);
     SimpleRouter::post('/my_thoughts',  [ThoughtsController::class,'saveThoughts']);
-    SimpleRouter::get('/list', [SiteController::class,'list_thoughts']);    
+    SimpleRouter::get('/list', [SiteController::class,'list_thoughts']);  // Chama a rota
+    SimpleRouter::get('/list', [ThoughtsController::class,'listThoughts']);  //Chama a função listThoughts
     SimpleRouter::post('/list', [UserController::class,'login']);     
     SimpleRouter::get('/register',  [SiteController::class,'register']); 
     SimpleRouter::post('/register', [UserController::class,'register']);
@@ -28,7 +29,6 @@ SimpleRouter::group(['prefix' => '/thoughts/public'], function () {
     SimpleRouter::get('/logout', [UserController::class, 'logout']);
     SimpleRouter::get('/confirm', [SiteController::class,'confirm']);
     SimpleRouter::post('/confirm', [UserController::class, 'verifyConfirmationCode' ]);
-    SimpleRouter::get('/list', [ThoughtsController::class,'listThoughts']);
     SimpleRouter::post('/delete',  [ThoughtsController::class,'deleteThoughts']);
   
 

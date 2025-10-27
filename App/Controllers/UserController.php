@@ -25,17 +25,20 @@ class UserController
 
  
 
-    public function __construct(){
-        $db = new ConnectDb();
-        $this->conn = $db->getConnection();
+   public function __construct(){
+     /*     $db = new ConnectDb();
+        $this->conn = $db->getConnection();   */
         $this->helper = new Helper();
     }
-    
+   
 
      public function register() //Alterar o nome (esta função apenas dá inicio ao processo de registro)
-    {
-        $conn = $this->conn;
-        $message = '';
+    {       session_start();
+            $_SESSION['db'] = "globals";
+            require_once("/opt/lampp/htdocs/thoughts/config.php");
+            $conn = new ConnectDb(); //BUG: Quando inicia-se a nova conexão, a variável $db fica null.
+            $db = $conn->getConnection();
+
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $email = $_POST["email"] ?? '';
@@ -47,7 +50,8 @@ class UserController
             $_SESSION['created_at']= date("Y-m-d H:i:s"); // cria a data atual
 
             // Verifica se e-mail já existe
-            $checkEmailStmt = $conn->prepare("SELECT email_hash FROM users WHERE email_hash = ?");
+            $checkEmailStmt = $db->prepare("SELECT email_hash FROM users WHERE email_hash = ?");
+
             $checkEmailStmt->execute([$_SESSION['email_hash']]);
 
             if ($checkEmailStmt->fetch()) {
@@ -119,24 +123,46 @@ class UserController
     }
 
     public function verifyConfirmationCode() {  
-       session_start();
+        session_start();
        $confirmationCode = $_SESSION['confirmation_code'];  
        $code = $_POST['code'] ?? '';  
        $email_hash = $_SESSION['email_hash'];  
        $password_hash = $_SESSION['password_hash'];
        $created_at = $_SESSION['created_at']; 
+       $last_login = date("Y-m-d H:i:s");
        $toastClass = '';
         
        if ($confirmationCode === $code) {
-         $stmt = $this->conn->prepare("INSERT INTO users (email_hash, password_hash, created_at) VALUES (?, ?, ?)");
-         if ($stmt->execute([$email_hash, $password_hash, $created_at])) {
+        $_SESSION['db'] = "globals";
+            require_once("/opt/lampp/htdocs/thoughts/config.php");
+            $conn = new ConnectDb(); //BUG: Quando inicia-se a nova conexão, a variável $db fica null.
+            $db = $conn->getConnection();
+            $stmt = $db->prepare("INSERT INTO users (email_hash, password_hash, created_at, last_login) VALUES (?, ?, ?, ?)");
+         if ($stmt->execute([$email_hash, $password_hash, $created_at, $last_login])) {
                         $_SESSION['user_session'] = $email_hash;
-                        $message = "Account created successfully";
+                        require('../config.php');
+                        $_SESSION['db'] = $email_hash;
+                        $conn = new ConnectDb();
+                        $db = $conn->getConnection();
+                     $db->exec("
+                                        CREATE TABLE IF NOT EXISTS emotions_log (
+                                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                            cause VARCHAR(255) NOT NULL,
+                                            emotion VARCHAR(255) NOT NULL,
+                                            intensity INT NOT NULL,
+                                            thought1 VARCHAR(255) NOT NULL,
+                                            thought2 VARCHAR(255) NOT NULL,
+                                            thought3 VARCHAR(255) NOT NULL,
+                                            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                                        );
+                                    ");
+                     /*   $message = "Account created successfully";
                         $toastClass = "#28a745";  
                         $button = '<a href="/thoughts/public"><button>Click here to log in</button></a>';
                         echo "<div style='background-color:$toastClass;color:white;padding:10px;margin:10px 0;'>
                                 $message<br>$button
-                            </div>";
+                            </div>"; */
+                        
                         header("location: /thoughts/public/list");
                         
                         
@@ -157,14 +183,19 @@ class UserController
     }
 
     public function login() {
-            $conn = $this->conn;
+         
 
             session_start();   
             $email = $_POST['email'];
             $email_hash = $this->helper->hashEmail($email);
             $password = $_POST['password_hash'];
+            
+            require_once("/opt/lampp/htdocs/thoughts/config.php");
+            $_SESSION["db"] = $_ENV["DB_NAME"];
+            $conn = new ConnectDb();
+            $db = $conn->getConnection();
 
-            $stmt = $conn->prepare("SELECT email_hash, password_hash FROM users WHERE email_hash = ?");
+            $stmt = $db->prepare("SELECT email_hash, password_hash FROM users WHERE email_hash = ?");
          
             $stmt->execute([$email_hash]);
             $fetch = $stmt->fetch();
@@ -172,6 +203,10 @@ class UserController
             if ($fetch && password_verify($password, $fetch['password_hash'])) {
                   
                 $_SESSION['user_session'] = $email_hash; //Não identifica a variável.
+                $stmt = $db->prepare("UPDATE users SET last_login = datetime('now') WHERE email_hash = ?");
+                $stmt->execute([$email_hash]);
+                require_once("../config.php");
+                $_SESSION["db"] = $email_hash;
                 header("location: /thoughts/public/list");
                 exit;
             } else {
@@ -180,7 +215,7 @@ class UserController
                     <div class="bg-primary" style="padding: 1rem; border-radius: 8px; color: #0734ffff; text-align: center;">
                         <span>Login inválido!</span>
                         <br><br>
-                        <a href="/thoughts/public/register" role="button" class="secondary"><button> Tente novamente </button></a>
+                        <a href="/thoughts/public/" role="button" class="secondary"><button> Tente novamente </button></a>
                     </div>
                 </article>
                 ';
@@ -191,26 +226,6 @@ class UserController
     }
 
 
-  /*  public function getUserName() {
-        $conn = $this->conn;
-
-        $email = $_POST["email"];
-
-        $stmt = $conn->prepare("SELECT username FROM users WHERE email = ?");
-        $stmt-> execute([$email]);
-        
-        $return = $stmt->fetch(mode: PDO::FETCH_ASSOC);
-        
-        if ($return) {
-           session_start();
-           $_SESSION['username'] = $return["username"];
-           $_SESSION["hash"] =  hash('sha256', $return['username']); //Criar um código hash para que o usuário não consiga acessar o sistema via link
-        } else {
-            return "Usuário não encontrado"; //Remover
-        }
-          
-    }2025
-*/
 
     public function logout() {
         $this->conn = null;
@@ -221,7 +236,6 @@ class UserController
     }
 
 }
-
 
 
 
