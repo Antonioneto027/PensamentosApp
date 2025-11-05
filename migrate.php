@@ -1,6 +1,6 @@
 <?php 
 use Composer\Command\ExecCommand;
-?><?php
+
 
 use App\Controllers\ConnectDb;
 require 'vendor/autoload.php';
@@ -79,11 +79,6 @@ foreach ($migrationFilesUsers as $userFile) {
   }
 
 echo "Concluído o versionamento dos bancos de usuários.\n";
-
-
-
-
-
 
 
 
