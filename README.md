@@ -50,7 +50,7 @@ Ele está licenciado sob a licença **MIT** (consulte `LICENSE.md`).
 
 ## ⚙️ Tecnologias
 
-- **PHP 8.2**, **Laravel**, **SQLite**
+- **PHP 8.2**, **SimpleRouter**, **SQLite**
 - **Twig Templates**, **PicoCSS**
 - Hospedagem: domínio gentilmente oferecido por **isaCloud**
 
